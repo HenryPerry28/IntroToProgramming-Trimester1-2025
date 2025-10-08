@@ -1,7 +1,7 @@
-q1 = input("What is the speed of an unladen swallow?\n >") #29mph
+q1 = input("What is the speed of an unladen swallow (in mph)?\n >") #29mph
 q2 = input("How old was was George Boole when he died?\n >") #49
 q3 = input("What is the sum of 999 and 999?\n >") #1998
-q4 = input("What is the one number that is neither composite nor prime?\n >")
+q4 = input("What is the one number that is neither composite nor prime?\n >") #1
 q5 = input("What is the definition of tomfoolery?\n >") #foolsih of silly behavior
 q6 = input("What is the definition of bamboozle") #fool or cheat (someone)
 q7 = input("What is the best color?\n >") #Dark forest green
@@ -11,46 +11,46 @@ q0 = input("Howold is my cat\n >") #7
 
 score = 0
 
-if q1 == 1:
+if q1 == "29mph" or "29 mph":
     print("Question 1 correct")
     score = score + 1
 else:
     print("Question 1 wrong")
 
-if q2 == 2:
-    print("Question 1 correct")
+if q2 == "49" or "49 years":
+    print("Question 2 correct")
     score = score + 1
 else:
-    print("Question 1 wrong")
+    print("Question 2 wrong")
 
-if q3 == 1998:
-    print("Question 1 correct")
+if q3 == "1998":
+    print("Question 3 correct")
     score = score + 1
 else:
-    print("Question 1 wrong")
+    print("Question 3 wrong")
 
-if q4 == 1:
+if q4 == "1":
     print("Question 4 correct")
     score = score + 1
 else:
-    print("Question 1 wrong")
+    print("Question 4 wrong")
     
-if q1 == 1:
-    print("Question 1 correct")
+if q5 == "foolsih of silly behavior" or "Foolsih of silly behavior":
+    print("Question 5 correct")
     score = score + 1
 else:
-    print("Question 1 wrong")
+    print("Question 5 wrong")
 
-if q1 == 1:
-    print("Question 1 correct")
+if q6 == 1:
+    print("Question 6 correct")
     score = score + 1
 else:
-    print("Question 1 wrong")
+    print("Question 6 wrong")
 
-if q1 == 1:
-    print("Question 1 correct")
+if q7 == 1:
+    print("Question 7 correct")
     score = score + 1
 else:
-    print("Question 1 wrong")
+    print("Question 7 wrong")
 
 print(score) 
