@@ -1,52 +1,52 @@
-def multi_add():
+def add():
     total = 0 
-    while TRUE
+    while True:
         user_input = input("Enter numbers you want to add, with only spaces in between. Enter 'done' when done: ")
         if user_input.lower == "done":
             break
         try: 
             number = float(user_input)
             total += number
-        except ValuError:
+        except ValueError:
             print("Invalid input, type a valid number or 'done'.")
     print(f"The sum is {total}.")
 
 def subtract():
     total = 0 
-    while TRUE
+    while True:
         user_input = input("Enter numbers you want to subtract, with only spaces in between. Enter 'done' when done: ")
         if user_input.lower == "done":
             break
         try: 
             number = float(user_input)
             total -= number
-        except ValuError:
+        except ValueError:
             print("Invalid input, type a valid number or 'done'.")
     print(f"The difference is {total}.")
 
 def multiply ():
     total = 0 
-    while TRUE
+    while True:
         user_input = input("Enter numbers you want to multiply, with only spaces in between. Enter 'done' when done: ")
         if user_input.lower == "done":
             break
         try: 
             number = float(user_input)
             total *= number
-        except ValuError:
+        except ValueError:
             print("Invalid input, type a valid number or 'done'.")
     print(f"The product is {total}.")
 
 def divide():
     total = 0 
-    while TRUE
+    while True:
         user_input = input("Enter numbers you want to divide, with only spaces in between. Enter 'done' when done: ")
         if user_input.lower == "done":
             break
         try: 
             number = float(user_input)
             total /= number
-        except ValuError:
+        except ValueError:
             print("Invalid input, type a valid number or 'done'.")
     print(f"The dividend is {total}")
 
@@ -72,17 +72,19 @@ def calculator():
     num1_calc = float(input("x value\n >"))
     num2_calc = float(input("y value\n >"))
     if calc_choice == "ADDITION":
-        add(num1_calc, num2_calc)
+        add()
     if calc_choice == "SUBTRACTION":
-        subtract(num1_calc, num2_calc)
+        subtract()
     if calc_choice == "MULTIPLICATION":
-        multiply(num1_calc, num2_calc)
+        multiply()
     if calc_choice == "DIVISION":
-        divide(num1_calc, num2_calc)
+        divide()
     if calc_choice == "EXPONENTS":
         exponent(num1_calc, num2_calc)
     if calc_choice == "MODULUS":
-        floordivide(num1_calc, num2_calc):
+        modulus(num1_calc, num2_calc)
+    if calc_choice == "FLOORDIVIDE":
+        floordivide(num1_calc, num2_calc)
 
 password = input("Password:\n >")
 pin = input("Password:\n >")
@@ -97,49 +99,51 @@ def password_wall ():
             q4 = input("How old is my favorite pet\n >")
             if q3 == "Zen" and q4 == "7" or "7 years":
                 print("ACCESS GRANTED")
-                global enterance_key = 1
+                global entrance_key
+                entrance_key = 1
             else:
                 print("ACCESS DENIED")
-                global enterance_key = 2
+                global enterance_key
+                enterance_key = 2
         else: 
             print("ACCESS DENIED")
-            global enterance_key = 2
+            global enterance_key
+            enterance_key = 2
     else:
-    print("ACCESS DENIED")
-    global enterance_key = 2
+        print("ACCESS DENIED")
+        global entrance_key
+        enterance_key = 2
 
-password_wall():
+password_wall()
 
 if enterance_key == 1:
     print("CALCULATOR; TAX; NOTES; SORT_LIST")
     place = input("What would you like to access?\n >")
     
     if place == "CALCULATOR":
-        calculator():
+        calculator()
         exit = input("Would you like to exit(YES or NO)?\n >")
         if exit == "YES":
-        else:
             print("CALCULATOR; TAX; NOTES; SORTERS")
             place = input("What would you like to access?\n >")
     if place == "TAX":
         type2 = input("Do you want TOTAL or just the price of TAX?\n >")
-            if type2 = "TOTAL":
+        if type2 == "TOTAL":
                 titem = input("What is your item?\n >")
                 tprice = input("What is the cost of your item?\n >")
                 trate = 1.06875
                 calculate_total(tprice, trate, titem)
-            if type2 == "TAX":
-                item = input("What is your item?\n >")
-                price = input("What is the price of the item you are buying?\n >")
-                rate = 0.06875
-                calculate_tax(item, price, rate)
+        if type2 == "TAX":
+            item = input("What is your item?\n >")
+            price = input("What is the price of the item you are buying?\n >")
+            rate = 0.06875
+            calculate_tax(item, price, rate)
         exit = input("Would you like to exit(YES or NO)?\n >")
         if exit == "YES":
-        else:
             print("CALCULATOR; TAX; NOTES; SORTERS")
             place = input("What would you like to access?\n >")
 
-    if place == "NOTES"
+    if place == "NOTES":
         file_name = "new_file.txt"
         content = "This is the content of the new file.\nIt includes multiple lines."
         with open(file_name, 'w') as f:
@@ -148,13 +152,11 @@ if enterance_key == 1:
 
         exit = input("Would you like to exit(YES or NO)?\n >")
         if exit == "YES":
-        else:
-            print("CALCULATOR; TAX; NOTES; SORTERS")
-            place = input("What would you like to access?\n >")
-    if place == "SORT_LIST"
+             print("CALCULATOR; TAX; NOTES; SORTERS")
+             place = input("What would you like to access?\n >")
+    if place == "SORT_LIST":
         
         exit = input("Would you like to exit(YES or NO)?\n >")
         if exit == "YES":
-        else:
             print("CALCULATOR; TAX; NOTES; SORTERS")
             place = input("What would you like to access?\n >")

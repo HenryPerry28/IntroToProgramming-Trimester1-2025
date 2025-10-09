@@ -11,61 +11,61 @@ q0 = input("Howold is my cat\n >") #7
 
 score = 0
 
-if q1 == "29mph" or "29 mph":
+if q1.lower == "29mph" or "29 mph":
     print("Question 1 correct")
     score = score + 1
 else:
     print("Question 1 wrong")
 
-if q2 == "49" or "49 years":
+if q2.lower == "49" or "49 years":
     print("Question 2 correct")
     score = score + 1
 else:
     print("Question 2 wrong")
 
-if q3 == "1998":
+if q3.lower == "1998":
     print("Question 3 correct")
     score = score + 1
 else:
     print("Question 3 wrong")
 
-if q4 == "1":
+if q4.lower == "1":
     print("Question 4 correct")
     score = score + 1
 else:
     print("Question 4 wrong")
     
-if q5 == "foolsih or silly behavior" or "Foolsih or silly behavior":
+if q5.lower == "foolsih or silly behavior":
     print("Question 5 correct")
     score = score + 1
 else:
     print("Question 5 wrong")
 
-if q6 == "fool or cheat (someone)" or "Fool or cheat (someone):
+if q6.lower == "fool or cheat (someone)":
     print("Question 6 correct")
     score = score + 1
 else:
     print("Question 6 wrong")
 
-if q7 == "dark forest green" or "Dark forest green":
+if q7.lower == "dark forest green":
     print("Question 7 correct")
     score = score + 1
 else:
     print("Question 7 wrong")
 
-if q8 == "228b22":
+if q8.lower == "228b22":
     print("Question 7 correct")
     score = score + 1
 else:
     print("Question 7 wrong")
 
-if q9 == "no" or "No":
+if q9.lower == "no":
     print("Question 7 correct")
     score = score + 1
 else:
     print("Question 7 wrong")
 
-if q0 == "7" or "7 years":
+if q0.lower == "7" or "7 years":
     print("Question 7 correct")
     score = score + 1
 else:
