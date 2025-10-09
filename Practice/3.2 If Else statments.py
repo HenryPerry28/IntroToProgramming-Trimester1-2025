@@ -1,4 +1,10 @@
-def
+def calculate_total(tprice, trate, titem):
+    print(titem)
+    print(f"Your total price is ${float(tprice) * (trate)}")
+
+def calculate_tax(item, price, rate):
+    print(item)
+    print(f"Your tax is ${float(price) * (rate)}")
 
 password = input("Password:\n >")
 pin = input("Password:\n >")
@@ -32,5 +38,16 @@ if enterance_key == 1
     
     if place == "CALCULATOR"
         calculator(x, y):
-        
-    
+    if place == "TAX"
+        type2 = input("Do you want TOTAL or just the price of TAX?\n >")
+            if type2 = "TOTAL"
+                titem = input("What is your item?\n >")
+                tprice = input("What is the cost of your item?\n >")
+                trate = 1.06875
+                
+                calculate_total(tprice, trate, titem)
+            if type2 == "TAX"
+                item = input("What is your item?\n >")
+                price = input("What is the price of the item you are buying?\n >")
+                rate = 0.06875
+                calculate_tax(item, price, rate)
