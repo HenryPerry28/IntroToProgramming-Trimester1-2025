@@ -1,3 +1,5 @@
+def
+
 password = input("Password:\n >")
 pin = input("Password:\n >")
 def password_wall ():
@@ -10,24 +12,25 @@ def password_wall ():
             q3 = input("What is the name of my favorite pet\n >")
             q4 = input("How old is my favorite pet\n >")
             if q3 == "Zen" and q4 == "7" or "7 years"
-            
+                print("ACCESS GRANTED")
+                global enterance_key = 1
             else:
                 print("ACCESS DENIED")
+                global enterance_key = 2
         else: 
             print("ACCESS DENIED")
+            global enterance_key = 2
     else:
     print("ACCESS DENIED")
+    global enterance_key = 2
 
 password_wall():
 
-'''
-def password_return():
-    x = input("What is the password?\n >")
-    if x == "help":
-        print("Yes")
-    else:
-        print("No")
-        password_return()
-
-password_return()
-'''
+if enterance_key == 1
+    print("CALCULATOR; TAX; NOTES; SORTERS")
+    place = input("What would you like to access?\n >")
+    
+    if place == "CALCULATOR"
+        calculator(x, y):
+        
+    
