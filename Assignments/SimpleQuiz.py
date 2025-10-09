@@ -35,19 +35,37 @@ if q4 == "1":
 else:
     print("Question 4 wrong")
     
-if q5 == "foolsih of silly behavior" or "Foolsih of silly behavior":
+if q5 == "foolsih or silly behavior" or "Foolsih or silly behavior":
     print("Question 5 correct")
     score = score + 1
 else:
     print("Question 5 wrong")
 
-if q6 == 1:
+if q6 == "fool or cheat (someone)" or "Fool or cheat (someone):
     print("Question 6 correct")
     score = score + 1
 else:
     print("Question 6 wrong")
 
-if q7 == 1:
+if q7 == "dark forest green" or "Dark forest green":
+    print("Question 7 correct")
+    score = score + 1
+else:
+    print("Question 7 wrong")
+
+if q8 == "228b22":
+    print("Question 7 correct")
+    score = score + 1
+else:
+    print("Question 7 wrong")
+
+if q9 == "no" or "No":
+    print("Question 7 correct")
+    score = score + 1
+else:
+    print("Question 7 wrong")
+
+if q0 == "7" or "7 years":
     print("Question 7 correct")
     score = score + 1
 else:
