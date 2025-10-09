@@ -5,7 +5,7 @@ def multi_add():
     total = 0 
     while TRUE
         user_input = input("Enter numbers you want to add, with only spaces in between. Enter 'done' when done: ")
-        if user_input.lower == "done"
+        if user_input.lower == "done":
             break
         try: 
             number = float(user_input)
@@ -18,7 +18,7 @@ def subtract():
     total = 0 
     while TRUE
         user_input = input("Enter numbers you want to subtract, with only spaces in between. Enter 'done' when done: ")
-        if user_input.lower == "done"
+        if user_input.lower == "done":
             break
         try: 
             number = float(user_input)
