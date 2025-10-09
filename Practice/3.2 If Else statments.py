@@ -1,6 +1,3 @@
-file_name_exclusive = input("New file name:\n >")
-content_exclusive = "This content is for an exclusively new file."
-
 def multi_add():
     total = 0 
     while TRUE
@@ -27,11 +24,11 @@ def subtract():
             print("Invalid input, type a valid number or 'done'.")
     print(f"The difference is {total}.")
 
-def multiply (x, y):
+def multiply ():
     total = 0 
     while TRUE
         user_input = input("Enter numbers you want to multiply, with only spaces in between. Enter 'done' when done: ")
-        if user_input.lower == "done"
+        if user_input.lower == "done":
             break
         try: 
             number = float(user_input)
@@ -40,11 +37,11 @@ def multiply (x, y):
             print("Invalid input, type a valid number or 'done'.")
     print(f"The product is {total}.")
 
-def divide(x, y):
+def divide():
     total = 0 
     while TRUE
         user_input = input("Enter numbers you want to divide, with only spaces in between. Enter 'done' when done: ")
-        if user_input.lower == "done"
+        if user_input.lower == "done":
             break
         try: 
             number = float(user_input)
@@ -56,7 +53,7 @@ def divide(x, y):
 def modulus(x, y):
     print(x % y)
 
-def floordivide
+def floordivide(x, y):
     print(x // y)
 
 def exponent(x, y):
@@ -84,7 +81,7 @@ def calculator():
         divide(num1_calc, num2_calc)
     if calc_choice == "EXPONENTS":
         exponent(num1_calc, num2_calc)
-    if calc_choice == "MODULUS"
+    if calc_choice == "MODULUS":
         floordivide(num1_calc, num2_calc):
 
 password = input("Password:\n >")
@@ -98,7 +95,7 @@ def password_wall ():
             print("Phase 2 passed")
             q3 = input("What is the name of my favorite pet\n >")
             q4 = input("How old is my favorite pet\n >")
-            if q3 == "Zen" and q4 == "7" or "7 years"
+            if q3 == "Zen" and q4 == "7" or "7 years":
                 print("ACCESS GRANTED")
                 global enterance_key = 1
             else:
@@ -113,31 +110,31 @@ def password_wall ():
 
 password_wall():
 
-if enterance_key == 1
+if enterance_key == 1:
     print("CALCULATOR; TAX; NOTES; SORT_LIST")
     place = input("What would you like to access?\n >")
     
-    if place == "CALCULATOR"
+    if place == "CALCULATOR":
         calculator():
         exit = input("Would you like to exit(YES or NO)?\n >")
-        if exit == "YES"
+        if exit == "YES":
         else:
             print("CALCULATOR; TAX; NOTES; SORTERS")
             place = input("What would you like to access?\n >")
-    if place == "TAX"
+    if place == "TAX":
         type2 = input("Do you want TOTAL or just the price of TAX?\n >")
-            if type2 = "TOTAL"
+            if type2 = "TOTAL":
                 titem = input("What is your item?\n >")
                 tprice = input("What is the cost of your item?\n >")
                 trate = 1.06875
                 calculate_total(tprice, trate, titem)
-            if type2 == "TAX"
+            if type2 == "TAX":
                 item = input("What is your item?\n >")
                 price = input("What is the price of the item you are buying?\n >")
                 rate = 0.06875
                 calculate_tax(item, price, rate)
         exit = input("Would you like to exit(YES or NO)?\n >")
-        if exit == "YES"
+        if exit == "YES":
         else:
             print("CALCULATOR; TAX; NOTES; SORTERS")
             place = input("What would you like to access?\n >")
@@ -150,14 +147,14 @@ if enterance_key == 1
         print(f"File '{file_name}' created and content written successfully.")
 
         exit = input("Would you like to exit(YES or NO)?\n >")
-        if exit == "YES"
+        if exit == "YES":
         else:
             print("CALCULATOR; TAX; NOTES; SORTERS")
             place = input("What would you like to access?\n >")
     if place == "SORT_LIST"
         
         exit = input("Would you like to exit(YES or NO)?\n >")
-        if exit == "YES"
+        if exit == "YES":
         else:
             print("CALCULATOR; TAX; NOTES; SORTERS")
             place = input("What would you like to access?\n >")
