@@ -69,8 +69,7 @@ def calculate_tax(item, price, rate):
 
 def calculator():
     calc_choice = input("Choose operation: ADDITION; SUBTRACTION; MULTIPLICATION; DIVISION; EXPONENTS; MODULUS; FLOOR DIVIDE\n >")
-    num1_calc = float(input("x value\n >"))
-    num2_calc = float(input("y value\n >"))
+
     if calc_choice == "ADDITION":
         add()
     if calc_choice == "SUBTRACTION":
@@ -80,10 +79,16 @@ def calculator():
     if calc_choice == "DIVISION":
         divide()
     if calc_choice == "EXPONENTS":
+        num1_calc = float(input("x value\n >"))
+        num2_calc = float(input("y value\n >"))
         exponent(num1_calc, num2_calc)
     if calc_choice == "MODULUS":
+        num1_calc = float(input("x value\n >"))
+        num2_calc = float(input("y value\n >"))
         modulus(num1_calc, num2_calc)
     if calc_choice == "FLOORDIVIDE":
+        num1_calc = float(input("x value\n >"))
+        num2_calc = float(input("y value\n >"))
         floordivide(num1_calc, num2_calc)
 
 password = input("Password:\n >")
@@ -107,16 +112,14 @@ def password_wall ():
                 enterance_key = 2
         else: 
             print("ACCESS DENIED")
-            global enterance_key
             enterance_key = 2
     else:
         print("ACCESS DENIED")
-        global entrance_key
         enterance_key = 2
 
 password_wall()
 
-if enterance_key == 1:
+if entrance_key == 1:
     print("CALCULATOR; TAX; NOTES; SORT_LIST")
     place = input("What would you like to access?\n >")
     

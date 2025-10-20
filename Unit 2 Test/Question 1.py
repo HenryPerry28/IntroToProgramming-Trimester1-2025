@@ -6,4 +6,4 @@ x = input("First Word:\n >")
 y = input("Second Word:\n >")
 z = input("Third Word: \n >")
 
-print(x+y+z)
+print(x + y + z)
