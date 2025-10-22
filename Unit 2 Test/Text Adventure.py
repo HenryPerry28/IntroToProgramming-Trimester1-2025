@@ -43,7 +43,8 @@ def subrace_selection():
         if not final_subrace in all_subraces:
             print("Choose one of the options")
         else: 
-            return final_subrace 
+            break
+        return final_subrace
 
 
 
