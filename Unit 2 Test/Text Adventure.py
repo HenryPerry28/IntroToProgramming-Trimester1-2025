@@ -197,7 +197,7 @@ def all_stats_assign():
 
 def town1_map():
     print()
-    global town_location
+    global town_location, town_location_var
     print("Locations:")
     print("> 1. City hall")
     print("> 2. Shopping district")
@@ -206,13 +206,20 @@ def town1_map():
     av_tl = ["1", "2", "3", "4"]
     while True:
         dashes()
-        town_location = input("Where would you like to go>\n > ")
-        if not town_location in av_tl:
+        town_location_var = input("Where would you like to go?\n > ")
+        if town_location_var == "1":
+            town_location = "City Hall"
+        elif town_location_var == "2":
+            town_location = "Shopping District"
+        elif town_location_var == "3":
+            town_location = "The Firewater Inn"
+        elif town_location_var == "4":
+            town_location = "Town Center"
+        if not town_location_var in av_tl:
             print("Input just the number")
         else:
             print(f"You will go to {town_location}")
             toha_hall_location()
-            s1()
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 
@@ -220,11 +227,11 @@ def toha_hall_location ():
     global npc_toha_interation_cho, guild_clerk_name, adventurer_name
     adventurer_name = "A local adventurer"
     guild_clerk_name = "The guild clerk"
-    if town_location == "City Hall":
+    if town_location_var == "City Hall":
         print("You have arrived in city hall, there are only 3 people of intrest.")
         print("> 1. The mayor")
         print(f"> 2. {guild_clerk_name}")
-        print("> 3. A local adventurer")
+        print(f"> 3. {adventurer_name}")
         print("> 4. Leave")
         av_npc_toha_interations = ["1", "2", "3", "4"]
         av_desc_of_npc_toha_y_or_no = ["Yes", "No"]
@@ -302,7 +309,9 @@ def a_toha_npc_interactions():
                     toha_hall_location()
 
 def orc_interaction():
-    global inn_payment_t_or_f, orc_return_y_or_n, s0_c1
+    global inn_payment_t_or_f, orc_return_y_or_n, s0_c1, orc_man_relation_npc, gold, silver, copper, inn_payment
+    gold = 1; silver = 7; copper = 23; inn_payment = 10
+    orc_man_relation_npc = 0
     if s0_c1 == "1":
         if silver >= 10:
             print("He takes your money and says, 'Great, I never need to see you again.'")
@@ -328,7 +337,7 @@ def orc_interaction():
             while True:
                 orc_return_y_or_n = input("Choice\n > ")
                 if not orc_return_y_or_n in av_orc_re_y_or_n:
-                    print("Please stop (or you actually messed up on this one, if so, it's only number)")
+                    print("Please stop (or you actually messed up on this one, if so, it's only the number)")
                     orc_interaction()
                 else:
                     if orc_return_y_or_n == "1":
@@ -390,12 +399,11 @@ def s0():
 #111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111#
 
     if s0_c1 == "1":
-        silver = silver
         dashes()
         print("A large orcish man greets you, and says that payments is due today, and if you don't pay he will kick you out.")
         while True:
             print("What would you like to do?")
-            print(f"1. Pay the 10 silver (Gold: {gold}, Silver: {silver}, Copper: {copper}")
+            print(f"1. Pay the 10 silver (Gold: {gold}, Silver: {silver}, Copper: {copper})")
             print("2. Discuss payment plans (barter)")
             print("3. Agree to pay later")
             print("4. Say you aren't paying, ever")
