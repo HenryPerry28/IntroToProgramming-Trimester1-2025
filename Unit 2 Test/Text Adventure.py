@@ -1,3 +1,4 @@
+
 import random
 
 print("You will be going on an adventure, you will have a choice of certain paths to take, to choose the path, enter the number related to the choice.")
@@ -100,7 +101,7 @@ def class_stuff_decider():
         inventory = f_inventory    
     elif class_key == "w":
         print("You will choose what item you want out of the option")
-        scroll = input("What scroll do you want: Fligt, Misty Step (teleportation), Fireball, or Chromatic Orb")
+        scroll = input("What scroll do you want: Fligt, Misty Step (teleportation), Fireball, or Chromatic Orb\n> ")
         w_inventory = "Staff", "Light Armor", f"{scroll}"
         inventory = w_inventory
     elif class_key == "r":
@@ -235,11 +236,14 @@ def toha_hall_location ():
         print(f"> 3. {adventurer_name}")
         print("> 4. Leave")
         av_npc_toha_interations = ["1", "2", "3", "4"]
-        av_desc_of_npc_toha_y_or_no = ["Yes", "No"]
+        av_desc_of_npc_toha_y_or_no = ["1", "2"]
         while True:
-            desc_npc_toha = input("Would yoo like a description of each (yes or no)?\n > ").title
+            desc_npc_toha = input("Would you like a description of each (yes or no)?\n > ").title
+            print("> 1. Yes")
+            print("> 2. No")
             if not desc_npc_toha in av_desc_of_npc_toha_y_or_no:
                 print("Choose just the number")
+                break
             else:
                 if desc_npc_toha == "Yes":
                     dashes()
@@ -248,6 +252,7 @@ def toha_hall_location ():
                     print("The local adventurer is another adventurer like yourself(duh), but he is hoping to join the 'Blazing Sun' guild")
                     dashes()
                     npc_toha_interation_cho = input("Who would you like to talk to?\n > ")
+                    a_toha_npc_interactions()
                 else:
                     while True:
                         npc_toha_interation_cho = input("Who would you like to talk to?\n > ")
@@ -308,7 +313,6 @@ def a_toha_npc_interactions():
                     dashes()
                     print("Lame, well I might see you around?")
                     toha_hall_location()
-                    shop_dist_location()
 
 
 def shop_dist_location():
@@ -460,46 +464,48 @@ def s1():
         print("Where would you like to go")
 
 def attack_goblin():
-    print("""
-                    .             
-                : .-             
-               :#%#:             
-               -##+*+            
-               +*%##             
-                #@#              
-                #-               
-               #%+               
-               *=                
-              -*  =++ -%%+*.     
-              #     -#+*-+::-    
-             #=   :-=-*#+-+=+    
-           .:+:  .  *@%%*+-==    
-           .+%* : =-===*#+**:    
-           :%@@  .-:--=+#%@*.    
-          :*@@@# ===::-+#@@@#    
-         .:#=@@%*#*+::--+%@%#=   
-          *= %@@#%@#*-==*%@%+%#: 
-         :-:  *@%+-+*+*+-+=:==%* 
-        . :   .:-  -#*#+=#%%%%#%.
-        .     =   .+**%%%@@+%#%-.
-                  :**%%%##.=+=-: 
-                .-*#++*%%%+      
-                  *%*%+=%%%      
-                  -#%*=-+%%      
-                   @-*==+%%:     
-                   : %**###:     
-                    ##%*@#%      
-                   =%%%@%#.      
-                   @%%@@%-       
-                  +++#@%%%       
-                 :%%%**#%#       
-                 .:*++-=.        
-                    --=--        
-    __________________________________
-           -------------------- 
-           |      HP: 0/0     | 
-           --------------------
-
+    #print("""
+    #                .             
+    #            : .-             
+    #           :#%#:             
+    #           -##+*+            
+    #           +*%##             
+    #            #@#              
+    #            #-               
+    #           #%+               
+    #           *=                
+    #          -*  =++ -%%+*.     
+    #          #     -#+*-+::-    
+    #         #=   :-=-*#+-+=+    
+    #       .:+:  .  *@%%*+-==    
+    #       .+%* : =-===*#+**:    
+    #       :%@@  .-:--=+#%@*.    
+    #      :*@@@# ===::-+#@@@#    
+    #     .:#=@@%*#*+::--+%@%#=   
+    #      *= %@@#%@#*-==*%@%+%#: 
+    #     :-:  *@%+-+*+*+-+=:==%* 
+    #    . :   .:-  -#*#+=#%%%%#%.
+    #    .     =   .+**%%%@@+%#%-.
+    #              :**%%%##.=+=-: 
+    #            .-*#++*%%%+      
+    #              *%*%+=%%%      
+    #              -#%*=-+%%      
+    #               @-*==+%%:     
+    #               : %**###:     
+    #                ##%*@#%      
+    #               =%%%@%#.      
+    #               @%%@@%-       
+    #              +++#@%%%       
+    #             :%%%**#%#       
+    #             .:*++-=.        
+    #                --=--        
+    #__________________________________
+    #       -------------------- 
+    #       |      HP: 0/0     | 
+    #       --------------------
+#""")
+    if class_key == "f":
+        print("""
                                                          
                        +%.           
                       :@#%           
@@ -536,7 +542,10 @@ def attack_goblin():
 -------------------- ---------------------------------
 |      HP: 0/0      | Attacks: Abilities: Inventory: |
 -------------------- ---------------------------------
-                         
+          """),
+
+    elif class_key == "w":
+        print("""                 
                   -                  
                   +                  
                  :*                  
@@ -578,6 +587,9 @@ def attack_goblin():
 |      HP: 0/0      | Attacks: Abilities: Inventory: |
 -------------------- ---------------------------------
 
+"""),
+    elif class_key == "r":
+        print("""
 
                                  :.      
                                 **+      
@@ -620,6 +632,9 @@ def attack_goblin():
 |      HP: 0/0      | Attacks: Abilities: Inventory: |
 -------------------- ---------------------------------
 
+"""),
+    elif class_key == "c":
+        print("""
                              
                    -**-          .*- 
               ..   -+==          *=+-
@@ -672,6 +687,9 @@ print(f"After every thing, you are a level 1 {final_race} {class_choice}")
 dashes()
 class_key_decider()
 class_stuff_decider()
+
+attack_goblin()
+
 all_stats_assign()
 dashes()
 
