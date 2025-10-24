@@ -1,5 +1,8 @@
-
 import random
+
+gold = 0
+silver = 0 
+copper = 0
 
 print("You will be going on an adventure, you will have a choice of certain paths to take, to choose the path, enter the number related to the choice.")
 
@@ -7,13 +10,17 @@ def roll_20():
     r20 = random.randint(1, 20)
     return r20
 def roll_10():
-    return random.randint(1, 10)
+    r10 = random.randint(1, 10)
+    return r10
 def roll_8():
-    return random.randint(1, 8)
+    r8 = random.randint(1, 8)
+    return r8
 def roll_6():
-    return random.randint(1, 6)
+    r6 = random.randint(1, 6)
+    return r6
 def roll_4():
-    return random.randint(1, 4)
+    r4 = random.randint(1, 4)
+    return r4
 def dashes():
     print("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
 def race_selection():
@@ -179,6 +186,14 @@ def all_stats_assign():
         dashes()
         if sorted(player_stats_sorted_list) == sorted(rand_stats_list):
             global str_mod, dex_mod, con_mod, wis_mod, int_mod, cha_mod
+            dashes()
+            print(f"Your final strengh stat is: {str_stat}")
+            print(f"Your final dexterity stat is: {dex_stat}")
+            print(f"Your final constition stat is: {con_stat}")
+            print(f"Your final wisdom stat is: {wis_stat}")
+            print(f"Your final intelligence stat is: {int_stat}")
+            print(f"Your final charsima stat is: {cha_stat}")
+            dashes()
             str_mod = str_mod_calc(str_stat)
             dex_mod = dex_mod_calc(dex_stat)
             con_mod = con_mod_calc(con_stat)
@@ -221,11 +236,11 @@ def town1_map():
             print("Input just the number")
         else:
             print(f"You will go to {town_location}")
-            toha_hall_location()
+            toha_location()
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 
-def toha_hall_location ():
+def toha_location ():
     global npc_toha_interation_cho, guild_clerk_name, adventurer_name
     adventurer_name = "A local adventurer"
     guild_clerk_name = "The guild clerk"
@@ -238,51 +253,70 @@ def toha_hall_location ():
         av_npc_toha_interations = ["1", "2", "3", "4"]
         av_desc_of_npc_toha_y_or_no = ["1", "2"]
         while True:
-            desc_npc_toha = input("Would you like a description of each (yes or no)?\n > ").title
+            print("Would you like a description of each (yes or no)?")
             print("> 1. Yes")
             print("> 2. No")
+            desc_npc_toha = input("Choice\n> ")
             if not desc_npc_toha in av_desc_of_npc_toha_y_or_no:
                 print("Choose just the number")
                 break
             else:
-                if desc_npc_toha == "Yes":
+                if desc_npc_toha == "1":
                     dashes()
                     print("The mayor is a big advocate for adventures, beacuse you are one is the only reason you could approach him.")
                     print("The guild clerk is responsible for managing the quest board, and is a representative from the 'Blazing Sun' guild")
                     print("The local adventurer is another adventurer like yourself(duh), but he is hoping to join the 'Blazing Sun' guild")
                     dashes()
-                    npc_toha_interation_cho = input("Who would you like to talk to?\n > ")
-                    a_toha_npc_interactions()
+                    print("Who would you like to talk to?")
+                    print("The Mayor")
+                    print("A guild clerk")
+                    print("A local adventurer")
+                    while True:
+                        npc_toha_interation_cho = input("Choice\n> ")
+                        if not npc_toha_interation_cho in av_npc_toha_interations:
+                            print("Stop inputing the wrong number")
+                            toha_location()
+                        else:
+                            a_toha_npc_interactions()
                 else:
                     while True:
-                        npc_toha_interation_cho = input("Who would you like to talk to?\n > ")
+                        dashes()
+                        print("Who would you like to talk to?")
+                        print("> 1. The Mayor")
+                        print("> 2. A guild clerk")
+                        print("> 3. A local adventurer")
+                        npc_toha_interation_cho = input("Choice\n> ")
                         if not npc_toha_interation_cho in av_npc_toha_interations:
                             print("Choose just the number(at his point of tired of reminding you)")
+                            toha_location()
                         else:    
                             a_toha_npc_interactions()
 
 def a_toha_npc_interactions():
-    global guild_clerk_name, adventurer_name, name_signature
-    av_guild_status_y_or_n = ["Yes", "No"]
+    global guild_clerk_name, adventurer_name, name_signature, gold
+    av_guild_status_y_or_n = ["1", "2"]
     if npc_toha_interation_cho == "1":
         dashes()
         print("You walk up to the mayor, and start a chat")
         print("'Oh thank you mighty adventurer (take in mind your level 1) for you service, it means the world to me that you would spend time in such a small town!'")
         print("'Here, take this!' and the mayor gives you 2 gold pieces.")
         gold += 2
-        toha_hall_location()
+        toha_location()
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #    
     elif npc_toha_interation_cho == "2":
         dashes()
         print("You walk up to the guild clerk")
         guild_clerk_name = "Eldric Varnell"
         while True:
-            guild_status = input("'Hello, my name is Eldric Varnell, I see that you must be an adventurer (based off of you gear), are you looking to join the guild?'\n > ").title
+            print("'Hello, my name is Eldric Varnell, I see that you must be an adventurer (based off of you gear), are you looking to join the guild?'")
+            print("> 1. Yes")
+            print("> 2. No")
+            guild_status = input("Choice\n> ")
             if not guild_status in av_guild_status_y_or_n:
                 print("Really, please, I'm tired of putting in this line of code.")
                 a_toha_npc_interactions()
             else:
-                if guild_status == "Yes":
+                if guild_status == "1":
                     dashes()
                     print("Great, I will get the set up in a couple of days, I just need you to sign here")
                     name_signature = input("Write your signature here (don't do anything dumb)\n > ")
@@ -290,29 +324,35 @@ def a_toha_npc_interactions():
                         print("You die of cringe for putting '67' in your name")
                         exit()
                     print("Great, like I said, I'll get back to you in a couple of days.")
-                elif guild_status == "No":
+                    toha_location()
+                elif guild_status == "2":
                     dashes()
                     print("Bummer, I think you would have been a great fit")
+                    toha_location()
+                    break
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
     elif npc_toha_interation_cho == "3":
         dashes()
         adventurer_name = "George [Lurk] Lark"
         print("You walk up to the local adventurer, and he greets you with a kind smile")
         print("'Why hello there, it's nice to see another adventurer in this town, sorry to be rude, my name is George, George Lark, but some call me George lurk, I'm a rogue.'")
-        av_join_guild_y_or_no = ["Yes", "No"]
+        av_join_guild_y_or_no = ["1", "2"]
+        print("Anyway I was just signing up to join the 'Blazing Guild', how about you?")
         while True:
-            join_guild_y_or_n = input("Anyway I was just signing up to join the 'Blazing Guild', how about you?").title
+            print("> 1. Yes")
+            print("> 2. No")
+            join_guild_y_or_n = input("Choice\n> ")
             if not join_guild_y_or_n in av_join_guild_y_or_no:
-                print("Dude stop, I'm still puting them in for every option.")
+                print("Dude stop, I'm still putting them in for every option.")
             else:
-                if join_guild_y_or_n == "Yes":
+                if join_guild_y_or_n == "1":
                     dashes()
                     print("Cool, I guess I'll see you around.")
-                    toha_hall_location()
-                elif join_guild_y_or_n == "No":
+                    toha_location()
+                elif join_guild_y_or_n == "2":
                     dashes()
                     print("Lame, well I might see you around?")
-                    toha_hall_location()
+                    toha_location()
 
 
 def shop_dist_location():
@@ -322,7 +362,6 @@ def shop_dist_location():
 
 def orc_interaction():
     global inn_payment_t_or_f, orc_return_y_or_n, s0_c1, orc_man_relation_npc, gold, silver, copper, inn_payment
-    gold = 1; silver = 7; copper = 23; inn_payment = 10
     orc_man_relation_npc = 0
     if s0_c1 == "1":
         if silver >= 10:
@@ -695,8 +734,4 @@ dashes()
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 
-<<<<<<< HEAD
 s0()
-=======
-s0()
->>>>>>> b15965fb2497316c36c878c15ab0d94f06ef9156
