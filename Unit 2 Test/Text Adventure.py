@@ -1,9 +1,5 @@
 import random
 
-gold = 0
-silver = 0 
-copper = 0
-
 print("You will be going on an adventure, you will have a choice of certain paths to take, to choose the path, enter the number related to the choice.")
 
 def roll_20():
@@ -276,6 +272,7 @@ def toha_location ():
                         if not npc_toha_interation_cho in av_npc_toha_interations:
                             print("Stop inputing the wrong number")
                             toha_location()
+                            #break
                         else:
                             a_toha_npc_interactions()
                 else:
@@ -289,11 +286,12 @@ def toha_location ():
                         if not npc_toha_interation_cho in av_npc_toha_interations:
                             print("Choose just the number(at his point of tired of reminding you)")
                             toha_location()
+                            #break
                         else:    
                             a_toha_npc_interactions()
-
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #    
 def a_toha_npc_interactions():
-    global guild_clerk_name, adventurer_name, name_signature, gold
+    global guild_clerk_name, adventurer_name, name_signature, gold, guild_status
     av_guild_status_y_or_n = ["1", "2"]
     if npc_toha_interation_cho == "1":
         dashes()
@@ -307,6 +305,7 @@ def a_toha_npc_interactions():
         dashes()
         print("You walk up to the guild clerk")
         guild_clerk_name = "Eldric Varnell"
+        return guild_clerk_name
         while True:
             print("'Hello, my name is Eldric Varnell, I see that you must be an adventurer (based off of you gear), are you looking to join the guild?'")
             print("> 1. Yes")
@@ -315,13 +314,20 @@ def a_toha_npc_interactions():
             if not guild_status in av_guild_status_y_or_n:
                 print("Really, please, I'm tired of putting in this line of code.")
                 a_toha_npc_interactions()
+                #break
             else:
                 if guild_status == "1":
                     dashes()
                     print("Great, I will get the set up in a couple of days, I just need you to sign here")
                     name_signature = input("Write your signature here (don't do anything dumb)\n > ")
-                    if "67" in name_signature:
+                    if "6" and "7" in name_signature:
                         print("You die of cringe for putting '67' in your name")
+                        exit()
+                    elif "six" and "seven" in name_signature:
+                        print("You die of cringe for putting '67' in your name")
+                    elif "sixty" and "seven" in name_signature:
+                        print("You die of cringe for putting '67' in your name")
+                        exit()
                         exit()
                     print("Great, like I said, I'll get back to you in a couple of days.")
                     toha_location()
@@ -358,7 +364,11 @@ def a_toha_npc_interactions():
 def shop_dist_location():
     if town_location == "Shopping District":
         print("You have entered the shopping district")
-        print("There are four different")
+        print("There are four different shops in this area")
+        print("> 1. The blacksmith (Doused in Flame)")
+        print("> 2. The armorer (Steel Driven)")
+        print("> 3. The general store (Grampy's Goods)")
+        print("> 4. The resteraunt ()")
 
 def orc_interaction():
     global inn_payment_t_or_f, orc_return_y_or_n, s0_c1, orc_man_relation_npc, gold, silver, copper, inn_payment
