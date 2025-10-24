@@ -368,7 +368,7 @@ def shop_dist_location():
         print("> 1. The blacksmith (Doused in Flame)")
         print("> 2. The armorer (Steel Driven)")
         print("> 3. The general store (Grampy's Goods)")
-        print("> 4. The resteraunt ()")
+        print("> 4. The restaurant ()")
 
 def orc_interaction():
     global inn_payment_t_or_f, orc_return_y_or_n, s0_c1, orc_man_relation_npc, gold, silver, copper, inn_payment
