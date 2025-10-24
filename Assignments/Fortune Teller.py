@@ -8,7 +8,7 @@ def tellfortune():
      q5 = input("Choose a magical multiplier\n >")
      global seed
      try:
-        seed = int(q1 + q2 + q3 + q4) * int(q5)
+        seed = int(q1 + q2 + q3 + q4) * float(q5)
 
         f0 = "You will own 20 cats."
         f1 = "You will live in a basement forever."

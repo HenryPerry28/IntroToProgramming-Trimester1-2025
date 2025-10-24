@@ -503,6 +503,15 @@ def s0():
         dashes()
         print("'WAKE UP! Payment is due! I'm kicking you out if you don't pay by 12:00 today, and it's already 10:00.' Yells a large voice.")
         orc_man_relation_npc -= 1
+        
+        av_follow_orc_man_y_or_n = ["1", "2"]
+        print("You hear footsteps receeding down the hall.")
+        follow_orc_man_y_or_n = input("Would you like to follow them or head into town?\n >")
+        if not follow_orc_man_y_or_n in av_follow_orc_man_y_or_n:
+            print("Please just stop")
+            pass
+        else: 
+            pass
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
