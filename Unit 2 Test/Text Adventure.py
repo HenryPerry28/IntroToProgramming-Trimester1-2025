@@ -2,6 +2,82 @@ import random
 
 print("You will be going on an adventure, you will have a choice of certain paths to take, to choose the path, enter the number related to the choice.")
 
+av_weapons = ["Longsword", "Shortsword", "Dagger", "Heavy Crossbow", "Quarterstaff"]
+
+player = {"Inventory": {}, 
+          "Equipped": {}}
+
+gold = 1
+silver = 7 
+copper = 23
+
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+
+def equip_weapon_all():
+    equip_weapon()
+    add_weapon_from_inventory()
+
+def add_weapon_from_inventory(quantity = 1):
+    global equip_input
+    equipped = player["Equipped"]
+    if equip_input in equipped:
+        print("Already equipped")
+    else:
+        equipped[equip_input] = quantity
+        print(player["Equipped"])
+
+def equip_weapon():
+    global inventory, equip_input
+    print(player["Equipped"])
+    print(player["Inventory"])
+    equip_input = input("What would you like to equip (you have to type out the full item name)?\n> ").title
+    if equip_input in player["Inventory"]:
+        while True:
+            if not equip_input in av_weapons:
+                print("Choose one of you weapons")
+            else:
+                print("IT WORKED")
+    else:
+        print("Invalid input")
+        equip_weapon()
+
+
+def attack(weapon):
+    for item in inventory:
+        print()
+    weapon = input("")
+    roll_damage(weapon)
+
+# dice_type is entered as just the number for the kind of die (d8 = 8)
+# amount_dice is the amout of dice rolled
+def roll_damage(dice_type, amount_dice = 1):
+    return sum(random.randint(1, dice_type) for _ in range(amount_dice))
+
+def print_decide_inventory(item, quantity=1):
+    global inventory
+    inventory = player["Inventory"]
+    if item in inventory:
+        inventory[item] += quantity
+    else:
+        inventory[item] = quantity
+
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+
+def print_money ():
+    print (f"Gold: {gold} Silver {silver} Copper: {copper}")
+
+time = 0
+num_list_2 = ["1", "2"]
+num_list_3 = ["1", "2", "3"]
+num_list_4 = ["1", "2", "3", "4"]
+num_list_5 = ["1", "2", "3", "4", "5"]
+num_list_6 = ["1", "2", "3", "4", "5", "6"]
+
+
 def roll_20():
     r20 = random.randint(1, 20)
     return r20
@@ -19,6 +95,7 @@ def roll_4():
     return r4
 def dashes():
     print("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
+
 def race_selection():
     global final_race, race_choice
     print("The first step in your adventure is to choose your race")
@@ -44,7 +121,6 @@ def subrace_selection():
     else:
         class_selction()
         return None
-    
     while True:
         final_subrace = input("Choose a subrace\n >").title()
         if not final_subrace in all_subraces:
@@ -82,8 +158,8 @@ def class_selction():
         if not class_choice in all_classes:
             print("Choose one of the class options")
         else:
+            class_key_decider()
             break
-    return class_choice
 
 def class_key_decider():
     global class_key
@@ -98,22 +174,26 @@ def class_key_decider():
     return class_key
 
 def class_stuff_decider():
-    global inventory
     if class_key == "f":
-        f_inventory = "Sword", "Heavy Armor", "Healing Potion"
-        inventory = f_inventory    
+        print_decide_inventory("Longsword", 1)
+        print_decide_inventory("Chain Mail", 1)
+        print_decide_inventory("Healing Potion", 2)
+        print(player)
     elif class_key == "w":
-        print("You will choose what item you want out of the option")
+        print("You will choose what item you want out of the options (all are different scrolls, can cast for free)")
         scroll = input("What scroll do you want: Fligt, Misty Step (teleportation), Fireball, or Chromatic Orb\n> ")
-        w_inventory = "Staff", "Light Armor", f"{scroll}"
-        inventory = w_inventory
+        print_decide_inventory("Quarter-staff", 1)
+        print_decide_inventory("Padded Armor", 1)
+        print_decide_inventory(f"{scroll}", 1)
     elif class_key == "r":
-        r_inventory = "2 Dagger", "Light Armor", "2 Smoke Bombs"
-        inventory = r_inventory
+        print_decide_inventory("Daggers", 2)
+        print_decide_inventory("Padded Armor", 1)
+        print_decide_inventory("Smoke Bomb", 2)
     elif class_key == "c":
-        c_inventory = "Staff", "Holy Symbol", "Medium Armor", "Mace"
-        inventory = c_inventory
-    print(f"{inventory}")
+        print_decide_inventory("Holy Symbol (Auto-crit on any roll)", 1)
+        print_decide_inventory("Hide Armor", 1)
+        print_decide_inventory("Mace", 1)
+    #print(player)
 
 def stat_calc():
     x = [(random.randint(1, 6)), (random.randint(1, 6)), (random.randint(1, 6)), (random.randint(1, 6))]
@@ -210,85 +290,78 @@ def all_stats_assign():
 
 def town1_map():
     print()
-    global town_location, town_location_var
+    global town_location
     print("Locations:")
     print("> 1. City hall")
     print("> 2. Shopping district")
     print("> 3. The Firewater Inn")
     print("> 4. Town Center")
     av_tl = ["1", "2", "3", "4"]
+    town_location = input("Where would you like to go?\n > ")
     while True:
-        dashes()
-        town_location_var = input("Where would you like to go?\n > ")
-        if town_location_var == "1":
-            town_location = "City Hall"
-        elif town_location_var == "2":
-            town_location = "Shopping District"
-        elif town_location_var == "3":
-            town_location = "The Firewater Inn"
-        elif town_location_var == "4":
-            town_location = "Town Center"
-        if not town_location_var in av_tl:
+        if not town_location in av_tl:
             print("Input just the number")
+            town1_map()
         else:
-            print(f"You will go to {town_location}")
-            toha_location()
-
+            dashes()
+            if town_location == "1":
+                toha_location()
+                return town_location 
+            elif town_location == "2":
+                shop_dist_location()
+                return town_location
+            elif town_location == "3":
+                pass
+                return town_location
+            elif town_location == "4":
+                return town_location
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 def toha_location ():
     global npc_toha_interation_cho, guild_clerk_name, adventurer_name
     adventurer_name = "A local adventurer"
     guild_clerk_name = "The guild clerk"
-    if town_location == "City Hall":
+    if town_location == "1":
         print("You have arrived in city hall, there are only 3 people of intrest.")
-        print("> 1. The mayor")
-        print(f"> 2. {guild_clerk_name}")
-        print(f"> 3. {adventurer_name}")
+        print("> 1. Talk to the mayor")
+        print(f"> 2. Talk to the {guild_clerk_name}")
+        print(f"> 3. Talk to the {adventurer_name}")
         print("> 4. Leave")
+        npc_toha_interation_cho = input("What would you like to do?\n >")
         av_npc_toha_interations = ["1", "2", "3", "4"]
         av_desc_of_npc_toha_y_or_no = ["1", "2"]
         while True:
-            print("Would you like a description of each (yes or no)?")
-            print("> 1. Yes")
-            print("> 2. No")
-            desc_npc_toha = input("Choice\n> ")
-            if not desc_npc_toha in av_desc_of_npc_toha_y_or_no:
-                print("Choose just the number")
-                break
+            if not npc_toha_interation_cho in av_npc_toha_interations:
+                print("please stop")
+                toha_location()
             else:
-                if desc_npc_toha == "1":
-                    dashes()
-                    print("The mayor is a big advocate for adventures, beacuse you are one is the only reason you could approach him.")
-                    print("The guild clerk is responsible for managing the quest board, and is a representative from the 'Blazing Sun' guild")
-                    print("The local adventurer is another adventurer like yourself(duh), but he is hoping to join the 'Blazing Sun' guild")
-                    dashes()
-                    print("Who would you like to talk to?")
-                    print("The Mayor")
-                    print("A guild clerk")
-                    print("A local adventurer")
-                    while True:
-                        npc_toha_interation_cho = input("Choice\n> ")
-                        if not npc_toha_interation_cho in av_npc_toha_interations:
-                            print("Stop inputing the wrong number")
-                            toha_location()
-                            #break
+                if npc_toha_interation_cho == "4":
+                    town1_map()
+                else:
+                    print("Would you like a description of each (yes or no)?")
+                    print("> 1. Yes")
+                    print("> 2. No")
+                    desc_npc_toha = input("Choice\n> ")
+                    if not desc_npc_toha in av_desc_of_npc_toha_y_or_no:
+                        print("Choose just the number")
+                        toha_location()
+                    else:
+                        if desc_npc_toha == "1":
+                            dashes()
+                            print("The mayor is a big advocate for adventures, beacuse you are one is the only reason you could approach him.")
+                            print("The guild clerk is responsible for managing the quest board, and is a representative from the 'Blazing Sun' guild")
+                            print("The local adventurer is another adventurer like yourself (duh), but he is hoping to join the 'Blazing Sun' guild")
+                            dashes()
                         else:
                             a_toha_npc_interactions()
-                else:
-                    while True:
-                        dashes()
-                        print("Who would you like to talk to?")
-                        print("> 1. The Mayor")
-                        print("> 2. A guild clerk")
-                        print("> 3. A local adventurer")
-                        npc_toha_interation_cho = input("Choice\n> ")
-                        if not npc_toha_interation_cho in av_npc_toha_interations:
-                            print("Choose just the number(at his point of tired of reminding you)")
-                            toha_location()
-                            #break
-                        else:    
-                            a_toha_npc_interactions()
+                            while True:
+                                dashes()
+                                npc_toha_interation_cho = input("Choice\n> ")
+                                if not npc_toha_interation_cho in av_npc_toha_interations:
+                                    print("Choose just the number(at his point of tired of reminding you)")
+                                    toha_location()
+                                else:    
+                                    a_toha_npc_interactions()
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #    
 def a_toha_npc_interactions():
     global guild_clerk_name, adventurer_name, name_signature, gold, guild_status
@@ -305,7 +378,6 @@ def a_toha_npc_interactions():
         dashes()
         print("You walk up to the guild clerk")
         guild_clerk_name = "Eldric Varnell"
-        return guild_clerk_name
         while True:
             print("'Hello, my name is Eldric Varnell, I see that you must be an adventurer (based off of you gear), are you looking to join the guild?'")
             print("> 1. Yes")
@@ -314,7 +386,7 @@ def a_toha_npc_interactions():
             if not guild_status in av_guild_status_y_or_n:
                 print("Really, please, I'm tired of putting in this line of code.")
                 a_toha_npc_interactions()
-                #break
+                return guild_clerk_name
             else:
                 if guild_status == "1":
                     dashes()
@@ -324,10 +396,10 @@ def a_toha_npc_interactions():
                         print("You die of cringe for putting '67' in your name")
                         exit()
                     elif "six" and "seven" in name_signature:
-                        print("You die of cringe for putting '67' in your name")
+                        print("You die of cringe for putting '67' in your name")                        
+                        exit()
                     elif "sixty" and "seven" in name_signature:
                         print("You die of cringe for putting '67' in your name")
-                        exit()
                         exit()
                     print("Great, like I said, I'll get back to you in a couple of days.")
                     toha_location()
@@ -335,7 +407,6 @@ def a_toha_npc_interactions():
                     dashes()
                     print("Bummer, I think you would have been a great fit")
                     toha_location()
-                    break
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
     elif npc_toha_interation_cho == "3":
         dashes()
@@ -360,15 +431,154 @@ def a_toha_npc_interactions():
                     print("Lame, well I might see you around?")
                     toha_location()
 
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 def shop_dist_location():
-    if town_location == "Shopping District":
+    global shop_location, inventory, gold, silver, copper, time
+    if town_location == "2":
+        dashes()
         print("You have entered the shopping district")
         print("There are four different shops in this area")
         print("> 1. The blacksmith (Doused in Flame)")
         print("> 2. The armorer (Steel Driven)")
         print("> 3. The general store (Grampy's Goods)")
-        print("> 4. The restaurant ()")
+        print("> 4. The restaurant (Steamin' Pie)")
+        print("> 5. The Bank (that's its name)")
+        print("> 6. Leave")
+        print(f"> Gold: {gold} Silver: {silver} Copper: {copper}")
+        print(f"Inventory: {inventory}")
+        shop_location = input("Where would you like to go?\n> ")
+        while True:
+            if not shop_location in num_list_6:
+                print("Why")
+                shop_dist_location()
+            else:
+                if shop_location == "1":
+                    dashes()
+                    print("You have chosen to head to Doused in Flame, upon entering you see a small halfling behind the counter")
+                    print("'Welcome in adventurer, my name is Dorin, I assume you come in for new weapons, if not I recomend you leave.'")
+                    print("'Otherwise here are my wares!'")
+                    shop_dist_npc_interactions()
+                elif shop_location == "2":
+                    dashes()
+                    print("You have chosen to had to Steel Driven, upon entering you see a tall human hammering away at a piece of metal.")
+                    print("'Hey, my name is Brom! Good to see a hero that will buy my wares, if you have the money anyway, I know the quests don't pay well.'")
+                    print("Any who, you need anything from my stock?")
+                    shop_dist_npc_interactions()
+                elif shop_location == "3":
+                    dashes()
+                    print("You have chosen ")
+                    print("Hello there young lad, nice to see a young face around here.")
+                    print("I don't have a lot but if you want to see it anyway, feel free to take a look.")
+                    shop_dist_location()
+                elif shop_location == "4":
+                    dashes()
+                    print("You have chosen to head into the Steaming Pie, upon entering there is a chipper high elf waiting to sit you at a table.")                    
+                    print("Hey there! Coming to look for some food, or our world renown pie (not actually, they just say it is)")
+                    print("Here, take a look at our menu (food can heal you during combat) or, if you want something more practical to head to our shop out the back.")
+                    shop_dist_location()
+                elif shop_location == "5":
+                    dashes()
+                    print("You head to the bank, where you can take out a loan or get money exchanged, upon entering, you see a lithe Drow standing at a counter")
+                    print("'How are you doing, my name is Viren. I will help you with any amount of currency exchanging you need to do'")
+                    print("'If you need to take out a loan, go talk to Rurik (he points to a dwarf in the corner).'")
+                    shop_dist_npc_interactions()
+                elif shop_location == "6":
+                    dashes()
+                    print("You decide there is nothing helpful here at the moment, so you head back to onto the street")
+                    town1_map()
+                    
+def shop_dist_npc_interactions():
+    global gold, silver, copper, inventory
+    if shop_location == "1":
+        while True:
+            dashes()
+            print(f"Would you like to browse Dorin's wares(Gold: {gold} Silver: {silver}) Copper: {copper})")
+            print("> 1. Yes")
+            print("> 2. No (leave)")
+            blacksmith_y_or_n = input("\n> ")
+            if not blacksmith_y_or_n in num_list_2:
+                print("STOP")
+                shop_dist_npc_interactions()
+            else:
+                # if time >= 1 
+                    #print(d)
+                if blacksmith_y_or_n == "1":
+                    dashes()
+                    print("Dorin's Wares")
+                    print("> 1. A shortsword (1 silver)")
+                    print("> 2. A pair of daggers (5 copper)")
+                    print("> 3. A heavy crossbow (20 bolts included)(1gp)")
+                    print("> 4. 20 Climbing Spikes (3 copper)")
+                    print("> 5. None (leave)")
+                    blacksmith_purchase = input("What would you like to buy?\n> ")
+                    while True:
+                        if not blacksmith_purchase in num_list_5:
+                            print("...")
+                        else:
+                            if blacksmith_purchase == "1":
+                                if silver >= 1:
+                                    inventory.append("Shortsword")
+                                    silver -= 1
+                                    print(inventory)
+                                    print_money()
+                                    print("Anything else?")
+                                    shop_dist_npc_interactions()
+
+                                elif (copper// 10) >= 1:
+                                    inventory.append("Shortsword")
+                                    copper -= 10
+                                    print(inventory)
+                                    print_money()
+                                    print("Anything else?")
+                                    shop_dist_npc_interactions()
+                                else:
+                                    print("You don't have enough money to purchase this item")
+                                    shop_dist_npc_interactions()
+                            elif blacksmith_purchase == "2":
+                                if copper >= 5:
+                                    print_decide_inventory("Daggers")
+                                    copper -= 5
+                                    print(inventory)
+                                    print_money()
+                                    print("Anything else?")
+                                    shop_dist_npc_interactions()
+                                else:
+                                    print("You don't have enough copper to purchase this item, if you have silver you can turn it into copper at The Bank.")
+                                    shop_dist_npc_interactions()
+                            elif blacksmith_purchase == "3":
+                                if gold >= 1:
+                                    gold -= 1
+                                    inventory.append("Heavy Crossbow")
+                elif blacksmith_y_or_n == "2":
+                    if gold < 1:
+                        print("You realize that you're broke and can't buy anything anway so you head outside")
+                        shop_dist_location()
+                    else:
+                        print("There is nothing of interest in Dorin's stock so you leave")
+                        shop_dist_location()
+    if shop_location == "2":
+        dashes()
+        while True:
+            print("")
+            dashes()
+            print(f"Would you like to browse Brom's wares (Gold: {gold} Silver: {silver}) Copper: {copper})")
+            print("> 1. Yes")
+            print("> 2. No (leave)")
+            armor_y_or_n = input("Choice\n>")
+            if not armor_y_or_n in num_list_2:
+                print("PLEAASE")
+                shop_dist_npc_interactions()
+            else:
+                if armor_y_or_n == "1":
+                    print("Brom's Wares:")
+                    print("> 1. Leather Armor (light)")
+                    print("> 2. Scale Mail (medium)")
+                    print("> 3. Chain Mail")
+                    print("> 4. Steel Sheild")
+
 
 def orc_interaction():
     global inn_payment_t_or_f, orc_return_y_or_n, s0_c1, orc_man_relation_npc, gold, silver, copper, inn_payment
@@ -439,9 +649,6 @@ def orc_interaction():
 
 def s0():
     global orc_man_relation_npc, gold, silver, copper, s0_c1, s0_c2, inn_payment_t_or_f, inn_payment
-    gold = 1
-    silver = 7 
-    copper = 23
     orc_man_relation_npc = 0
     inn_payment = 10
     print("You wake up on your bed in the The Firewater Inn, you had rented it for the week.")
@@ -474,7 +681,6 @@ def s0():
                 print("Choose a valid choice (only the number)")
             else:
                 orc_interaction()
-                break
         
 
 #222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222#
@@ -495,7 +701,6 @@ def s0():
                 print("Choose a valid choice (only the number)")
             else:
                 orc_interaction()
-                break
     
 #333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333#
     
@@ -509,9 +714,15 @@ def s0():
         follow_orc_man_y_or_n = input("Would you like to follow them or head into town?\n >")
         if not follow_orc_man_y_or_n in av_follow_orc_man_y_or_n:
             print("Please just stop")
-            pass
         else: 
-            pass
+            if follow_orc_man_y_or_n == "1":
+                print("You run out of your room to see a large orc man storming down the stairs")
+                print("He hears you and says, 'Go away, but get me your payment later'")
+                print("He looks angry so you take his words serioulsy, and head into town")
+                town1_map()
+            elif follow_orc_man_y_or_n == "2":
+                print("You decide that angering such a large person is not a good idea, and so you head into town")
+                town1_map()
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
@@ -736,21 +947,173 @@ def attack_goblin():
 -------------------- ---------------------------------
     """)
 
-#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 
-race_selection()
-print(f"After every thing, you are a level 1 {final_race} {class_choice}")
-dashes()
-class_key_decider()
+#race_selection()
+#print(f"After every thing, you are a level 1 {final_race} {class_choice}")
+#dashes()
+#class_stuff_decider()
+#attack_goblin()
+#all_stats_assign()
+#dashes()
+
+#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+
+#s0()
+
+'''
+# Player stats with multiple weapons
+player = {"name": f"{class_choice}",
+    "hp": 30,
+    "ac": 15,  # Armor Class
+    "attack_bonus": 5,
+    "weapons": {
+        "Sword": {"damage_dice": (8, 1), "attack_bonus": 5},
+        "Axe": {"damage_dice": (12, 1), "attack_bonus": 4},
+        "Dagger": {"damage_dice": (4, 2), "attack_bonus": 6},
+    },
+    "current_weapon": "Sword",
+    "inventory": {"Healing Potion": 2, "Fire Scroll": 1},
+}
+
+
+
+
+player = {"name": f"{class_choice}", "hp": (roll_20 + con_mod), "AC": 15,  # Armor Class
+    "attack_bonus": 5,
+    "weapons": {
+        "Sword": {"damage_dice": (8, 1), "attack_bonus": 5},
+        "Axe": {"damage_dice": (12, 1), "attack_bonus": 4},
+        "Dagger": {"damage_dice": (4, 2), "attack_bonus": 6},
+    },
+    "current_weapon": "Sword",
+    "inventory": {"Healing Potion": 2, "Fire Scroll": 1},
+}
+
+'''
+'''
+# Enemy stats
+enemy = {
+    "name": "Goblin",
+    "hp": 20,
+    "ac": 13,
+    "attack_bonus": 3,
+    "damage_dice": (6, 1),
+    "special": "Sneaky Strike"
+}
+
+# Attack function
+def attack(attacker, defender):
+    weapon = attacker.get("current_weapon")
+    attack_bonus = attacker["attack_bonus"]
+    damage_dice = (1, 1)
+    
+    if weapon:
+        weapon_info = attacker["weapons"][weapon]
+        attack_bonus = weapon_info["attack_bonus"]
+        damage_dice = weapon_info["damage_dice"]
+
+    roll = roll_d20()
+    total_attack = roll + attack_bonus
+
+    if roll == 20:
+        damage = roll_damage(*damage_dice) * 2
+        defender["hp"] -= damage
+        print(f"CRITICAL HIT! {attacker['name']} deals {damage} damage to {defender['name']}! (Roll: {roll})")
+    elif roll == 1:
+        print(f"{attacker['name']} critically misses! (Roll: {roll})")
+    elif total_attack >= defender["ac"]:
+        damage = roll_damage(*damage_dice)
+        defender["hp"] -= damage
+        print(f"{attacker['name']} hits {defender['name']} for {damage} damage! (Roll: {roll})")
+    else:
+        print(f"{attacker['name']} misses {defender['name']}! (Roll: {roll})")
+    print(f"{defender['name']} HP: {defender['hp']}\n")
+
+# Player turn with weapon switching
+def player_turn(player, enemy):
+    while True:
+        print("\nChoose an action:")
+        print("1. Attack")
+        print("2. Switch Weapon")
+        print("3. Use Item")
+        print("4. Cast Spell")
+        action = input("> ")
+
+        if action == "1":
+            attack(player, enemy)
+            break
+        elif action == "2":
+            print("Available weapons:", ", ".join(player["weapons"].keys()))
+            choice = input("Choose a weapon to equip: ").title()
+            if choice in player["weapons"]:
+                player["current_weapon"] = choice
+                print(f"Equipped {choice}")
+            else:
+                print("Invalid weapon choice.")
+        elif action == "3":
+            if not player["inventory"]:
+                print("No items in inventory!")
+                continue
+            print("Inventory:", player["inventory"])
+            item_choice = input("Which item do you want to use?\n> ").title()
+            if item_choice in player["inventory"] and player["inventory"][item_choice] > 0:
+                if item_choice == "Healing Potion":
+                    heal = roll_damage(8)
+                    player["hp"] += heal
+                    print(f"You heal {heal} HP! Current HP: {player['hp']}")
+                player["inventory"][item_choice] -= 1
+                break
+            else:
+                print("Invalid choice or no items left!")
+        elif action == "4":
+            if "Fire Scroll" in player["inventory"] and player["inventory"]["Fire Scroll"] > 0:
+                damage = roll_damage(10)
+                enemy["hp"] -= damage
+                print(f"You cast Fireball! {enemy['name']} takes {damage} fire damage!")
+                player["inventory"]["Fire Scroll"] -= 1
+                break
+            else:
+                print("No spells available!")
+        else:
+            print("Invalid action!")
+
+# Enemy turn
+def enemy_turn(enemy, player):
+    if enemy["hp"] < 10 and enemy.get("special") == "Sneaky Strike":
+        print(f"{enemy['name']} uses {enemy['special']}!")
+        damage = roll_damage(8)
+        player["hp"] -= damage
+        print(f"{player['name']} takes {damage} damage!\n")
+    else:
+        attack(enemy, player)
+
+# Battle loop
+def battle(player, enemy):
+    print(f"A wild {enemy['name']} appears!")
+    while player["hp"] > 0 and enemy["hp"] > 0:
+        player_turn(player, enemy)
+        if enemy["hp"] <= 0:
+            print(f"{enemy['name']} is defeated!")
+            break
+        enemy_turn(enemy, player)
+        if player["hp"] <= 0:
+            print("You have been defeated!")
+            break
+
+battle(player, enemy)
+
+
+'''
+
+
+#def choose_weapon_combat():
+
+#choose_weapon_combat()
+print_decide_inventory("Healing Potion", 5)
+class_selction()
 class_stuff_decider()
 
-attack_goblin()
-
-all_stats_assign()
-dashes()
-
-#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-
-s0()
+equip_weapon_all()
