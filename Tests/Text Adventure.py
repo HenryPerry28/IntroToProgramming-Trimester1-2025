@@ -370,8 +370,13 @@ def a_toha_npc_interactions():
         dashes()
         print("You walk up to the mayor, and start a chat")
         print("'Oh thank you mighty adventurer (take in mind your level 1) for you service, it means the world to me that you would spend time in such a small town!'")
-        print("'Here, take this!' and the mayor gives you 2 gold pieces.")
-        gold += 2
+        mayor_talked = False
+        if mayor_talked == False:
+            print("'Here, take this!' and the mayor gives you 2 gold pieces.")
+            gold += 2
+            mayor_talked = True
+        else:
+            print("Town is poor man, stop farming")
         toha_location()
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #    
     elif npc_toha_interation_cho == "2":
@@ -443,15 +448,13 @@ def shop_dist_location():
         print("There are four different shops in this area")
         print("> 1. The blacksmith (Doused in Flame)")
         print("> 2. The armorer (Steel Driven)")
-        print("> 3. The general store (Grampy's Goods)")
-        print("> 4. The restaurant (Steamin' Pie)")
-        print("> 5. The Bank (that's its name)")
-        print("> 6. Leave")
+        print("> 3. The Bank (that's its name)")
+        print("> 4. Leave")
         print(f"> Gold: {gold} Silver: {silver} Copper: {copper}")
         print(f"Inventory: {inventory}")
         shop_location = input("Where would you like to go?\n> ")
         while True:
-            if not shop_location in num_list_6:
+            if not shop_location in num_list_4:
                 print("Why")
                 shop_dist_location()
             else:
@@ -469,23 +472,10 @@ def shop_dist_location():
                     shop_dist_npc_interactions()
                 elif shop_location == "3":
                     dashes()
-                    print("You have chosen ")
-                    print("Hello there young lad, nice to see a young face around here.")
-                    print("I don't have a lot but if you want to see it anyway, feel free to take a look.")
-                    shop_dist_location()
-                elif shop_location == "4":
-                    dashes()
-                    print("You have chosen to head into the Steaming Pie, upon entering there is a chipper high elf waiting to sit you at a table.")                    
-                    print("Hey there! Coming to look for some food, or our world renown pie (not actually, they just say it is)")
-                    print("Here, take a look at our menu (food can heal you during combat) or, if you want something more practical to head to our shop out the back.")
-                    shop_dist_location()
-                elif shop_location == "5":
-                    dashes()
                     print("You head to the bank, where you can take out a loan or get money exchanged, upon entering, you see a lithe Drow standing at a counter")
                     print("'How are you doing, my name is Viren. I will help you with any amount of currency exchanging you need to do'")
-                    print("'If you need to take out a loan, go talk to Rurik (he points to a dwarf in the corner).'")
                     shop_dist_npc_interactions()
-                elif shop_location == "6":
+                elif shop_location == "4":
                     dashes()
                     print("You decide there is nothing helpful here at the moment, so you head back to onto the street")
                     town1_map()
@@ -567,7 +557,7 @@ def shop_dist_npc_interactions():
                                     silver -= silver
                                     hc_s_shop_payment = 10
                                     hc_s_shop_payment -= silver
-                                    copper -= hc_s_shop_payment
+                                    copper -= 10*hc_s_shop_payment
                                 elif copper >= 100:
                                     copper -= 100
                                     dashes()
@@ -590,6 +580,9 @@ def shop_dist_npc_interactions():
                                 else:
                                     print("Your broke and have nothing")
                                     shop_dist_npc_interactions()
+                            elif blacksmith_purchase == "5":
+                                print("You leave")
+                                shop_dist_npc_interactions()
                 elif blacksmith_y_or_n == "2":
                     if gold < 1:
                         print("You realize that you're broke and can't buy anything anway so you head outside")
@@ -619,11 +612,133 @@ def shop_dist_npc_interactions():
                     buy_armor = input("What would you like to buy?\n> ")
                     if buy_armor == "1":
                         if silver >= 3:
+                            silver -= silver
+                            dashes()
+                            print_money()
+                            print_decide_inventory("Light Armor", 1)
+                            print("Anything else?")
+                            shop_dist_npc_interactions
+                        elif silver + (copper//10) >= 3:
+                            la_s_payment = 3
+                            la_s_payment -= silver
+                            copper -= la_s_payment*10
+                            dashes()
+                            print_money()
+                            print_decide_inventory("Light Armor", 1)
+                            print("Anything else?")
+                            shop_dist_npc_interactions()
+                        elif copper >= 30:
+                            copper -= 30
+                            dashes()
+                            print_money()
+                            print_decide_inventory("Light Armor", 1)
+                            print("Anything else?")
+                            shop_dist_npc_interactions()
+                        else:
+                            print("You have no money")
+                            shop_dist_npc_interactions()
+                    if buy_armor == "2":
+                        if silver >= 8:
+                            silver -= silver
+                            dashes()
+                            print_money()
+                            print_decide_inventory("Medium Armor", 1)
+                            print("Anything else?")
+                            shop_dist_npc_interactions
+                        elif silver + (copper//10) >= 8:
+                            la_s_payment = 8
+                            la_s_payment -= silver
+                            copper -= la_s_payment*10
+                            dashes()
+                            print_money()
+                            print_decide_inventory("Medium Armor", 1)
+                            print("Anything else?")
+                            shop_dist_npc_interactions()
+                        elif copper >= 80:
+                            copper -= 80
+                            dashes()
+                            print_money()
+                            print_decide_inventory("Medium Armor", 1)
+                            print("Anything else?")
+                            shop_dist_npc_interactions()
+                        else:
+                            print("You have no money")
+                            shop_dist_npc_interactions()
+                    if buy_armor == "3":
+                        if gold >= 1:
+                            gold -= 1
+                            dashes()
+                            print_money()
+                            print_decide_inventory("Heavy Armor", 1)
+                        elif silver >= 10:
+                            silver -= silver
+                            dashes()
+                            print_money()
+                            print_decide_inventory("Heavy Armor", 1)
+                            print("Anything else?")
+                            shop_dist_npc_interactions
+                        elif silver + (copper//10) >= 10:
+                            la_s_payment = 10
+                            la_s_payment -= silver
+                            copper -= la_s_payment*10
+                            dashes()
+                            print_money()
+                            print_decide_inventory("Heavy Armor", 1)
+                            print("Anything else?")
+                            shop_dist_npc_interactions()
+                        elif copper >= 100:
+                            dashes()
+                            print_money()
+                            print_decide_inventory("Heavy Armor", 1)
+                            print("Anything else?")
+                            shop_dist_npc_interactions()
+                        else:
+                            print("You have no money")
+                            shop_dist_npc_interactions()
+                    if buy_armor == "4":
+                        if silver >= 5:
+                            silver -= silver
+                            dashes()
+                            print_money()
+                            print_decide_inventory("Steel Shield", 1)
+                            print("Anything else?")
+                            shop_dist_npc_interactions
+                        elif silver + (copper//10) >= 5:
+                            la_s_payment = 3
+                            la_s_payment -= silver
+                            copper -= la_s_payment*10
+                            dashes()
+                            print_money()
+                            print_decide_inventory("Steel Shield", 1)
+                            print("Anything else?")
+                            shop_dist_npc_interactions()
+                        elif copper >= 50:
+                            copper -= 50
+                            dashes()
+                            print_money()
+                            print_decide_inventory("Light Armor", 1)
+                            print("Anything else?")
+                            shop_dist_npc_interactions()
+                        else:
+                            print("You have no money")
+                            shop_dist_npc_interactions()
 
-                            print("")
                 if armor_y_or_n == "2":
                     print("You decide that nothing here is worth it")
                     shop_dist_location()
+    if shop_location == "3":
+        print("Would you like to exchange coins?")
+        print("> 1. Yes")
+        print("> 2. No")
+        coin_exchange = input("Choice\n>")
+        while True:
+            if not coin_exchange in num_list_2:
+                print("STOP")
+                shop_dist_location()
+            else:
+                if coin_exchange == "1":
+                    pass
+
 
 
 def orc_interaction():
