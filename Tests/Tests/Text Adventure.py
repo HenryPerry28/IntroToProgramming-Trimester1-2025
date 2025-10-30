@@ -727,6 +727,7 @@ def shop_dist_npc_interactions():
                     print("You decide that nothing here is worth it")
                     shop_dist_location()
     if shop_location == "3":
+        global coin_exchange_cho
         print("Would you like to exchange coins?")
         print("> 1. Yes")
         print("> 2. No")
@@ -737,9 +738,30 @@ def shop_dist_npc_interactions():
                 shop_dist_location()
             else:
                 if coin_exchange == "1":
-                    pass
+                    print("Which coin would you like to exchange?")
+                    print("> 1. Gold")
+                    print("> 2. Silver")
+                    print("> 3. Copper")
+                    coin_exchange_cho = input("Choice\n>")
+                    while True:
+                        if not coin_exchange_cho in num_list_3:
+                            print("why man, its pointless")
+                            shop_dist_location()
+                        else:
+                            coin_exchanger()
+def coin_exchanger():    
+    global coin_exchange_cho
+    print("What type of coin would you like to exchange to")
+    print("> 1. Gold")
+    print("> 2. Silver")
+    print("> 3. Copper")
+    coin_to = input("Choice\n> ")
+    if coin_exchange_cho == "1":
+        pass
 
 
+    
+    
 
 def orc_interaction():
     global inn_payment_t_or_f, orc_return_y_or_n, s0_c1, orc_man_relation_npc, gold, silver, copper, inn_payment
