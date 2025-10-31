@@ -727,41 +727,121 @@ def shop_dist_npc_interactions():
                     print("You decide that nothing here is worth it")
                     shop_dist_location()
     if shop_location == "3":
-        global coin_exchange_cho
+        global coin_exchange_y_or_n
         print("Would you like to exchange coins?")
         print("> 1. Yes")
         print("> 2. No")
-        coin_exchange = input("Choice\n>")
+        coin_exchange_y_or_n = input("Choice\n>")
         while True:
-            if not coin_exchange in num_list_2:
+            if not coin_exchange_y_or_n in num_list_2:
                 print("STOP")
                 shop_dist_location()
             else:
-                if coin_exchange == "1":
-                    print("Which coin would you like to exchange?")
+                coin_exchanger
+
+def check_coin():
+    global silver, gold, copper, coin_amount, coin_from
+    if gold <= 0 or silver <= 0 or copper <= 0:
+        print("You don't have enough of this coin")
+        coin_exchanger()
+    if coin_from == "1":
+        coin_amount > gold
+        print("Thats too much, cheater!")
+        coin_exchanger()
+    elif coin_from == "2":
+        print("That's too much, cheater!")
+        coin_exchanger()
+    elif coin_from == "3":
+        print("That's too much, cheater!")
+        coin_exchanger()
+
+def coin_exchanger():    
+    global coin_exchange_y_or_n, gold, silver, copper, coin_amount, coin_from
+    if coin_exchange_y_or_n == "1":
+        print("Which coin would you like to exchange?")
+        print("> 1. Gold")
+        print("> 2. Silver")
+        print("> 3. Copper")
+        print("> 4. None(leave)")
+        print_money()
+        while True:
+            coin_from = input("Choice\n>")
+            if not coin_from in num_list_4:
+                print("...")
+                coin_exchanger()
+            else:
+                if coin_from == "4":
+                    print("You decide you don't want any coins exchanged and head out")
+                    shop_dist_location()
+                while True:
+                    print("which coin would like to exchange to?")
                     print("> 1. Gold")
                     print("> 2. Silver")
                     print("> 3. Copper")
-                    coin_exchange_cho = input("Choice\n>")
-                    while True:
-                        if not coin_exchange_cho in num_list_3:
-                            print("why man, its pointless")
-                            shop_dist_location()
-                        else:
+                    print("> 4. None (leave)")
+                    print_money()
+                    coin_to = input("Choice\n> ")
+                    if not coin_to in num_list_4:
+                        print("...")
+                        coin_exchanger()
+                    else:
+                        if coin_to == "4":
+                            print("You decide that none of these coin types are usefull and head out")
                             coin_exchanger()
-def coin_exchanger():    
-    global coin_exchange_cho
-    print("What type of coin would you like to exchange to")
-    print("> 1. Gold")
-    print("> 2. Silver")
-    print("> 3. Copper")
-    coin_to = input("Choice\n> ")
-    if coin_exchange_cho == "1":
-        pass
+                        if coin_from == "1" and coin_to == "1":
+                            print("These are the same coin type")
+                            coin_exchanger()
+                        elif coin_from == "1" and coin_to == "2":
+                            check_coin()
+                            print("How much would you like to exchange?")
+                            coin_amount = input("Amount > ")
+                            gold -= coin_amount; silver += (coin_amount * 10)
+                        elif coin_from == "1" and coin_to == "3":
+                            check_coin()
+                            print("How much would you like to exchange?")
+                            coin_amount = input("Amount > ")
+                            gold -= coin_amount; copper += (coin_amount * 100) 
+                        if coin_from == "2" and coin_to == "1":
+                            check_coin()
+                            print("How much would you like to exchange(10 silver = 1 gold)?")
+                            coin_amount = input("Amount > ")
+                            if coin_amount < 10:
+                                print("That's not enough silver to turn into 1 gold")
+                                coin_exchanger()
+                            else:
+                                if not coin_amount // 10 == 0:
+                                    print("Input proper amount of silver(has to be in 10)")
+                                    coin_exchanger()
+                                else:
+                                    silver -= coin_amount; gold += (coin_amount /  10)
+                                    coin_exchanger()
+                        elif coin_from == "2" and coin_to == "2":
+                            print("These are the same coin type")
+                            coin_exchanger()
+                        elif coin_from == "2" and coin_to == "3":
+                            check_coin()
+                            print("How much would you like to exchange (1 silver = 10 copper)?")
+                            coin_amount = input("Amount > ")
+                            silver -= coin_amount; copper += (coin_amount * 10)
+                        if coin_from == "3" and coin_from == "1":
+                            check_coin()
+                            print("How much would you like to exchange?")
+                            coin_amount = input("Amount > ")
+                            if coin_amount < 100:
+                                print("That's not enough copper to turn into one gold")
+                                coin_exchanger()
+                            else:
+                                if not coin_amount // 10 == 0:
+                                    print("Input put proper amount of copper(base 10)")
+                                else:
+                                    copper -= coin_amount; gold += (coin_amount / 100)
+                        elif coin_from == "3" and coin_to == "2":
+                            check_coin()
+                            print("How much would you like to exchange (100 copper = 1 gold)")
 
 
-    
-    
+
+
 
 def orc_interaction():
     global inn_payment_t_or_f, orc_return_y_or_n, s0_c1, orc_man_relation_npc, gold, silver, copper, inn_payment
@@ -1147,6 +1227,9 @@ dashes()
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 s0()
+
+#Change Combot to be simpler
+
 
 '''
 # Player stats with multiple weapons
