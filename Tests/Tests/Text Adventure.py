@@ -352,8 +352,8 @@ def class_stuff_decider():
         print_decide_inventory("Healing Potion", 4)
     elif class_key == "w":
         print("You will choose what item you want out of the options (all are different scrolls, can cast for free)")
-        scroll = input("What scroll do you want: Mini Fireball Scroll, Chromatic Orb Scroll, or Lightning Bolt Scroll\n> ")
         while True:
+            scroll = input("What scroll do you want: Mini Fireball Scroll, Chromatic Orb Scroll, or Lightning Bolt Scroll\n> ").title()
             if not scroll in av_scrolls:
                 print("Write the ENTIRE name of the scroll")
                 class_stuff_decider()
