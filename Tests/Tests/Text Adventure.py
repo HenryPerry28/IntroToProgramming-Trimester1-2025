@@ -26,10 +26,10 @@ def equip_stuff():
         x = input("Choice\n> ")
         if not x in num_list_2:
             print("...")
-            equip_stuff()
+            break
         else:
             equip_armor()
-            equip_weapon
+            equip_weapon()
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
@@ -259,7 +259,7 @@ player = {
 
 def stuff():
     global damage_bonus, attack_bonus_var
-    if player["Equipped Weapon"] == "Heavy Crossbow":
+    if player["Equipped Weapon"] == "Heavy Crossbow" or player["Equipped Weapon"] == "Daggers":
         attack_bonus_var = dex_mod + prof_bonus
         damage_bonus = dex_mod
     elif player["Equipped Weapon"] == "Magic Missile":
@@ -292,7 +292,7 @@ armor_data = {
     "Hide Armor": {"Base ac": 12, "Bonus": "Dex (max 2)"},
     "Scale Mail": {"Base ac": 14, "Bonus": "Dex (max 2)"},
     "Chain Mail": {"Base ac": 16, "Bonus": "None"},
-    "Plate Mail": {"Base ac": 18, "Bonus": "None"},
+    "Plate Armor": {"Base ac": 18, "Bonus": "None"},
     "+1 Chain Mail": {"Base ac": 16, "Bonus": "Dex (max 2)"}
 }
 
@@ -993,7 +993,7 @@ def orc_interaction_2_pay():
 def orc_interaction_2_drink():
     global con_mod, copper, silver, gold, inn_payment
     count = 0; tab = 0
-    max_drink = (15 + con_mod) #put con_mod in after testing
+    max_drink = (15 + con_mod)
     print("You walk up to the orc and he asks what you want")
     print("1. Addicting drink")
     print("2. Some juice")
@@ -1061,7 +1061,7 @@ def town_center():
             continue
         else:
             if quest_help == "1":
-                print("Oh thank you so much, just take this cart of supplies off down that trail until you hit Waterock, and take this gold as thanks."); gold += 3; print_money
+                print("Oh thank you so much, just take this cart of supplies off down that trail until you hit Waterock, and take this gold as thanks."); gold += 3; print_money()
                 the_trail()
             elif quest_help == "2":
                 print("You decide to not do your job as an adventurer and help people")
@@ -1112,7 +1112,7 @@ def orc_interaction():
         print("'I could lower the prices, but depends what's in it for me.'")
         bargain_roll1 = (roll_20() + cha_mod)
         orc_man_relation_npc += 0
-        if bargain_roll1 <= -5:
+        if bargain_roll1 <= 5:
             print("'You didn't do nothing for me, so why should I cut you any slack, just go figure out a way to get me the money.'")
             town1_map()
             orc_man_relation_npc -= 1
@@ -1121,8 +1121,8 @@ def orc_interaction():
             orc_man_relation_npc += 0
             inn_payment -= 3
             town1_map()
-        elif bargain_roll1 <= 15:
-            print("'You make a point, you suck at life, I'll give you 5 off, you failure.' He says laughs 'Oh, and find me later to actually pay'")
+        else:
+            print("'You make a point, you suck at life, I'll give you 5 off, you failure.' He laughs 'Oh, and find me later to actually pay'")
             inn_payment -= 5; orc_man_relation_npc += 1
             town1_map()
     elif s0_c2 == "3": 
@@ -1204,9 +1204,9 @@ def s0():
         av_follow_orc_man_y_or_n = ["1", "2"]
         print("You hear footsteps receeding down the hall.")
         print("Would you like to follow them or head into town?")
-        print("> 1. Yes")
+        print("> 1. Follow him")
         print("> 2. Into town")
-        follow_orc_man_y_or_n = input("Choice\n >")
+        follow_orc_man_y_or_n = input("Choice\n> ")
         if not follow_orc_man_y_or_n in av_follow_orc_man_y_or_n:
             print("Please just stop")
         else: 
@@ -1222,7 +1222,282 @@ def s0():
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+def fireball():
+    print("Are you sure you want to cast this fireball, the enemy is within melee range.")
+    print("1. Yes")
+    print("2. No")
+    while True:
+        x = input("Choice\n> ")
+        if not x in num_list_2:
+            print("You're still doing it")
+        else:
+            if x == "1":
+                print("You decide that casting an explosive spell from 2ft away is a great way to die")
+                print("Ending discovered: I CAST FIREBALL!!!!")
+                exit()
+            elif x == 2: 
+                continue
 
+def money_loot():
+    global gold, silver, copper
+    # 1: Gold, 2: Gold + silver, 3: Gold + silver + copper, 4: Silver, 5: Silver + copper, 6: Copper
+    x = random.randint(1, 3)
+    if x == 1:
+        gold_rand = random.randint(0, 3);
+        silver_rand = 0
+        copper_rand = 0
+    elif x == 2:
+        gold_rand = random.randint(1, 3)
+        silver_rand = random.randint(5, 20)
+        copper_rand = 0
+    elif x == 3:
+        gold_rand = random.randint(1, 3)
+        silver_rand = random.randint(5, 20)
+        copper_rand = random.randint(50, 200)
+    elif x == 4:
+        gold_rand = 0
+        silver_rand = random.randint(5, 20)
+        copper_rand = 0
+    elif x == 5:
+        gold_rand = 0
+        silver_rand = random.randint(5, 20)
+        copper_rand = random.randint(50, 200)
+    elif x == 6:
+        gold_rand = 0
+        silver_rand = 0
+        copper_rand = random.randint(50, 200)
+    gold += gold_rand; silver += silver_rand; copper += copper_rand
+
+def roll_damage(num_dice, die_type):
+    global damage_bonus
+    total = 0; weapon = player["Equipped Weapon"]
+    for _ in range(num_dice):
+        total += random.randint(1, die_type); 
+    total += damage_bonus
+    print(f"You used a {weapon} and rolled a {num_dice}d{die_type} for {total}.")
+    return total
+    
+wolf_enemy = {
+    "name": "Hungry Wolf",
+    "hp": 14,
+    "ac": 10,
+    "Equipped Weapon": {"Wolf Claws"},
+    "Special": "Double Swipe",
+    "Stunned": 0
+}
+
+golem_enemy = {
+    "name": "Stone Golem",
+    "hp": 50,
+    "ac": 15,
+    "Equipped Weapon": {"Stone Fists"},
+    "Special": "Crush", 
+    "Stunned": 0
+}
+
+bandit_enemy = {
+    "name": "Bandit",
+    "hp": 12,
+    "ac": 14,
+    "Equipped Weapon": {"Shortsword"},
+    "Special": "Run", 
+    "Stunned": 0
+}
+
+goblin_enemy = {
+    "name": "Goblin",
+    "hp": 7,
+    "ac": 13,
+    "Equipped Weapon": {"Great Club"},
+    "Special": "None",
+    "Stunned": 0
+}
+
+enemies = [goblin_enemy, bandit_enemy, wolf_enemy]
+
+def attack(attacker, defender):
+    equipped_weapon = attacker.get("Equipped Weapon")
+    attack_bonus = 0
+    damage_die = (1, 4)
+    damage_bonus = 0
+    if equipped_weapon and equipped_weapon in weapons_data:
+        weapon_info = weapons_data[equipped_weapon]
+        attack_bonus = weapon_info.get("Attack Bonus", 0)
+        damage_die = weapon_info.get("Damage Die", (1, 4))
+        damage_bonus = weapon_info.get("Damage Bonus", 0)
+    roll = roll_20()
+    total_attack = roll + attack_bonus
+    num_dice, die_size = damage_die
+    damage = roll_damage(num_dice, die_size) + damage_bonus
+    attacker_name = attacker.get("name", "Attacker")
+    defender_name = defender.get("name", "Defender")
+    if auto_crit == 1:
+        damage *= 2
+        defender["hp"] -= damage
+        print(f"CRITICAL HIT! {attacker_name} deals {damage} damage to {defender_name}! (Roll: {roll})")        
+    if sneak == "t":
+        damage += roll_damage(3, 6)
+    if roll == 20:
+        damage *= 2
+        defender["hp"] -= damage
+        print(f"CRITICAL HIT! {attacker_name} deals {damage} damage to {defender_name}! (Roll: {roll})")
+    elif roll == 1:
+        print(f"{attacker_name} critically misses! (Roll: {roll})")
+    elif total_attack >= defender.get("ac", 10):
+        defender["hp"] -= damage
+        print(f"{attacker_name} hits {defender_name} for {damage} damage! (Roll: {roll})")
+    else:
+        print(f"{attacker_name} misses {defender_name}! (Roll: {roll})")
+    print(f"{defender_name} HP: {defender.get('hp', 0)}\n")
+
+def player_turn(player, enemy):
+    global hp, max_hp, auto_crit, sneak
+    while True:
+        if player["Stunned"] > 0:
+            print(f"{player['name']} is stunned and connot act this turn")
+            player["Stunned"] -= 1
+        else:
+            print("Choose an action:")
+            print("1. Attack (daggers will attack twice automaticaly)")
+            print("2. Switch Weapon")
+            print("3. Use Item")
+            action = input("> ")
+            if action == "1":
+                if player["Equipped Weapon"] == "Daggers": 
+                    attack(player, enemy); attack(player, enemy)
+                else:
+                    attack(player, enemy)
+                break
+            elif action == "2":
+                equip_weapon()
+            elif action == "3":
+                if not player["Inventory"]:
+                    print("No items in inventory!")
+                    continue
+                print(player["Inventory"])
+                item_choice = input("Which item do you want to use?\n> ").title()
+                if item_choice in player["Inventory"] and player["Inventory"][item_choice] > 0:
+                    if item_choice == "Healing Potion":
+                        heal = roll_damage(1, 6)
+                        player["hp"] += heal
+                        print(f"You heal {heal} hp, hp: {player['hp']}")
+                    elif item_choice == "Mini Fireball Scroll":
+                        fireball()
+                    elif item_choice == "Chromatic Orb Scroll":
+                        print("A orb of mixed light flies toward your enemy")
+                        enemy["hp"] -= roll_damage(2, 8)
+                    elif item_choice == "Lightning Bolt Scroll":
+                        print("A large lightning bolt streaks toward your enemy and stuns them for 1 turn")
+                        roll_damage(2, 6)
+                        enemy["Stunned"] = 1
+                    elif item_choice == "Smoke Bomb":
+                        print("You decide that this combat is far to difficult and decide to flee, using a smoke bomb in the process")
+                        break
+                    elif item_choice == "Holy Symbol":
+                        if hp <= (max_hp / 2):
+                            print("Your patron blesses you with life")
+                            hp = max_hp; print(hp)
+                        elif enemy["hp"] <= 10:
+                            print("Your patron brings down divine justice and smotes your foe")
+                            enemy["hp"] = 0
+                        else:
+                            print("Your patron blesses you with strength, your next hit will auto crit")
+                            auto_crit = 1
+                    elif item_choice == "Medicinal Plants":
+                        heal_m = roll_damage(1, 4)
+                        player["hp"] += heal_m
+                        print(f"You consume 1 plant, and it heals you for {heal_m} health, {player['hp']}")
+                    
+# Boosted items
+
+                    elif item_choice == "Invisibility Potion":
+                        print("You chugg down the invisibility potion, and vanish, you will get 3d6 additional damage on your next attack, and can't be attacked during the next turn")
+                        sneak = "t"; enemy["Stunned"] = 1
+                    elif item_choice == "Shatter Scroll":
+                        print("You speak the incantation the scoll and SHATTER the golem, dealing 5d6 damage")
+                        x = roll_damage(5, 6); enemy["hp"] -= x
+                    elif item_choice == "Divine Orb":
+                        max_usage = 3
+                        current_usage = 0
+                        print("What divine power would you like summon (can be used 3 times)?")
+                        print("1. Health")
+                        print("2. Damage")
+                        print("3. Critical Strikes")
+                        while True:
+                            y = input("Choice\n> ")
+                            if not y in num_list_3:
+                                print("You're on the final boss, really")
+                                player_turn(player, enemy)
+                            else:
+                                if y == "1":
+                                    player["hp"] = max_hp
+                                elif y == "2":
+                                    z = (enemy["hp"] // 4); enemy["hp"] -= z
+
+
+                    player["Inventory"][item_choice] -= 1
+                    break
+                else:
+                    print("Invalid choice or no items left!")
+            else:
+                print("Invalid action!")
+
+#-------------#
+
+def enemy_turn(enemy, player):
+    global ran
+    if enemy["Stunned"] > 0:
+        print(f"{enemy['name']} is stunned and connot act this turn")
+        enemy["Stunned"] -= 1
+    # Bandit
+    elif enemy["hp"] < 3 and enemy.get("Special") == "Run":
+        print(f"{enemy['name']} uses {enemy['Special']}!")
+        ran = "t"
+    # Wolf
+    elif enemy["hp"] < 5 and enemy.get("Special") == "Double Swipe":
+        print("The hungry wolf is desperate for food and sipes twice!")
+        attack(enemy, player); attack(enemy, player)
+    # Stone Golem
+    elif enemy["hp"] < 7 and enemy.get("Special") == "Crush":
+        print("A giant fist slams down on you stunning you for one turn")
+        attack(enemy, player); player["Stunned"] = 1
+    else:
+        attack(enemy, player)
+
+def battle(player, enemy):
+    global ran
+    print(f"A wild {enemy['name']} appears!")
+    while player["hp"] > 0 and enemy["hp"] > 0:
+        player_turn(player, enemy)
+        if enemy["hp"] <= 0:
+            print(f"{enemy['name']} is defeated!")
+            if enemy == bandit_enemy:
+                print("As loot you recive and his shortsword")
+                print_decide_inventory("Shortsword", 1); money_loot(); print(player['Inventory'])
+            elif enemy == goblin_enemy:
+                print("As loot you recive and his great club")
+                print_decide_inventory("Shortsword", 1); money_loot(); print(player['Inventory'])
+            elif enemy == golem_enemy:
+                print("As loot you recive a pile of rocks and a gem worth 100 gold!")
+                print_decide_inventory("Valuable gem"); print_decide_inventory("a pile of rocks"); print(player['Inventory'])
+                print("====================================== Unlocked Ending: Golem, Victory ======================================")
+                print("Deafeating the golem is no easy feat, but with you and the town's power you slayed golem and claimed victory.")
+            break
+        
+        elif ran == "t":
+            print("The bandit has run after you lowering it, you won but got no rewards")
+            ran = "f"
+            break
+        enemy_turn(enemy, player)
+        if player["hp"] <= 0:
+            if enemy == golem_enemy:
+                print("=========================== Unlocked Ending: Golem, Defeat ===========================")
+                print("Succumbing to the powers of the golem were expected, you were still a weak adventurer.")
+                print("         Yet you still took on the challenge when most would have surrendered         ")
+            else:
+                print(f"You you died to {enemy["name"]}!")
+                print("Ending discovered: Failure")
+                exit()
 # Create another ending where loot is taken right before town enterance
 # Add a battle loop of 10 random encounters (with loot), quest ends with talking to mayor and delivering goods
 # Treasure: 4 gold, +1 longsword, +1 magic missile, +1 heavy crossbow 
@@ -1268,20 +1543,24 @@ def Sudden_Storm():
         x = input("Choice\n> ")
         if x not in num_list_2:
             print("We're so far just stop")
-            Sudden_Storm()
+            break
         else:
             if x == "1":
                 y = (roll_20() + wis_mod); print(y)
                 if y >= 12:
                     print("Being surrounded by trees it's not terribly hard to find a dense patch for cover, where you wait it out."); total_encounters += 1
+                    break
                 else:
-                    print("The heavy storm makes it very hard to see and you fail to find adequate shelter, take 1 point of exhaustion damage"); total_encounters += 1; player["hp"] -= 1; print(player('hp'))
+                    print("The heavy storm makes it very hard to see and you fail to find adequate shelter, take 1 point of exhaustion damage"); total_encounters += 1; player["hp"] -= 1; i = player["hp"]; print(i)
+                    break
             if x == "2":
                 z = (roll_20() + con_mod); print(z)
                 if z >= 14:
                     print("You push forward with no further consequences")
+                    break
                 else:
-                    print("You try your hardest to push through the brutal storm, unfortunatly your best is not good enough, you take 2 points of exhaustion damage"); player["hp"] -= 2; print(player('hp'))
+                    print("You try your hardest to push through the brutal storm, unfortunatly your best is not good enough, you take 2 points of exhaustion damage"); player["hp"] -= 2; i = player["hp"]; print(i)
+                    break 
 
 def Singing_Stone():
     dashes()
@@ -1292,16 +1571,19 @@ def Singing_Stone():
         x = input("Choice\n> ")
         if x not in num_list_2:
             print("We're so far just stop")
-            Singing_Stone()
+            break
         else:
             if x == "1":
                 print("You move on seeing no value and only risk from the stone")
+                break
             elif x == "2":
-                y = (roll_20 + wis_mod); print(y)
+                y = (roll_20() + wis_mod); print(y)
                 if y >= 20:
                     print("Upon listening really close you can make out the words, 'Never gonna give you up, never gonna let you down, never gonna turn around and desert you,' and after that you decide to move on")
+                    break
                 else:
                     print("You listen really close yet can't make out a sound and so you move on")
+                    break
 def Lost_Animal():
     dashes()
     print("Just traveling down the path you start to hear a whine, like that of an animal. Soon you spot the source of the sound, a small little fox who is stuck in a trap")
@@ -1312,17 +1594,20 @@ def Lost_Animal():
         x = input("Choice\n> ")
         if not x in num_list_2:
             print("...")
-            Lost_Animal()
+            break
         else:
             if x == "1":
                 print("You decide to free the fox, but in order to do so you must make an animal handling check (wisdom) to soothe it.")
                 y = (roll_20() + wis_mod); print(y)
                 if y >= 12:
                     print("You successfully soothe the fox and free it, once you do it dashes into the trees.")
+                    break
                 else:
-                    print("You thought you had it soothed until you undo the trap, when it then bites you, take 1 point of damage."); player["hp"] -= 1; print(player('hp'))
+                    print("You thought you had it soothed until you undo the trap, when it then bites you, take 1 point of damage."); player["hp"] -= 1; i = player["hp"]; print(i)
+                    break
             elif x == "2":
                 print("You decide the fox isn't worth it and move on")
+                break
 def Herbal_Grove():
     dashes()
     print("While traveling you stuble across a patch of dense flora, you can't quite tell what it is, but the aroma is very pleasent.")
@@ -1333,13 +1618,14 @@ def Herbal_Grove():
         x = input("Choice\n> ")
         if not x in num_list_2:
             print("...")
-            Herbal_Grove()
+            break
         else:
             if x == "1":
                 print("Upon investigatin the flora the plants seem familiar, only if you could remember, roll history (intelligence)")
-                y = (roll_20 + int_mod); print
+                y = (roll_20() + int_mod); print
                 if y >= 12:
                     print("You remeber that eating these plants has some medicinal effcts (healing)"); print_decide_inventory("Medicinal Plants", 5)
+                    break
                 else:
                     print("You can't quite remeber what they are, would you like to take them?")
                     while True:
@@ -1350,8 +1636,10 @@ def Herbal_Grove():
                         else:
                             if z == "1":
                                 print("You decide that they can't be that bad and take a bundle."); print_decide_inventory("Medicinal Plants", 5)
+                                break
                             elif z == "2":
                                 print("You decide that the plants are not worth the risk an move on.")
+                                break
 def Traveling_Scholar():
     dashes()
     print("As you walk down the trail you spot a figure, they get closer and greet you, 'Why hello there, would you like to know what these woods were named after?'")
@@ -1361,12 +1649,14 @@ def Traveling_Scholar():
         x = input("Choice\n> ")
         if not x in num_list_2:
             print("...")
-            Traveling_Scholar()
+            break
         else:
             if x == "1":
                 print("'Great, these woods are called the Whispergrove Woods and are known for their singing stones—smooth rocks that make soft tones when the wind passes over them. Travelers often rest near these stones, finding them strangely soothing. The woods are home to woodland animals, some stray hunters, and the occasional wandering merchant. The forest has small clearings with streams, berry bushes, and fallen logs, providing natural places to camp. The trail through Whispergrove is well-trodden, though some spots are muddy or overgrown after rain. Locals say the woods have been used for generations for foraging, hunting, and resting on long journeys. While mostly peaceful, travelers are advised to keep an eye out for wild animals or bandits who sometimes use the forest as cover.'")
+                break
             elif x == "2":
                 print("'Shame, anyway see you around'")
+                break
 def Nothing():
     print("Nothing eventful happens")
 def waterock():
@@ -1436,12 +1726,7 @@ def the_trail():
     print("You begin down the forest trail...")
     while encounter_counter < total_encounters:
         total_encounters <= 10
-        if (encounter_counter % 5) == 0:
-            print("You decide that you have traveled enough for today and take a rest")
-            print(f"=== Day {day} ===")
-            day += 1
-            print(f"=== Day {day} ===")
-        elif random.randint(1, 4) <= 3:
+        if random.randint(1, 4) <= 3:
             print_mods()
             encounter_rand()
         elif encounter_counter == total_encounters:
@@ -1641,277 +1926,3 @@ equip_weapon()
 
 s0()
 
-def fireball():
-    print("Are you sure you want to cast this fireball, the enemy is within melee range.")
-    print("1. Yes")
-    print("2. No")
-    while True:
-        x = input("Choice\n> ")
-        if not x in num_list_2:
-            print("You're still doing it")
-        else:
-            if x == "1":
-                print("You decide that casting an explosive spell from 2ft away is a great way to die")
-                print("Ending discovered: I CAST FIREBALL!!!!")
-                exit()
-            elif x == 2: 
-                continue
-
-def money_loot():
-    global gold, silver, copper
-    # 1: Gold, 2: Gold + silver, 3: Gold + silver + copper, 4: Silver, 5: Silver + copper, 6: Copper
-    x = random.randint(1, 3)
-    if x == 1:
-        gold_rand = random.randint(0, 3);
-        silver_rand = 0
-        copper_rand = 0
-    elif x == 2:
-        gold_rand = random.randint(1, 3)
-        silver_rand = random.randint(5, 20)
-        copper_rand = 0
-    elif x == 3:
-        gold_rand = random.randint(1, 3)
-        silver_rand = random.randint(5, 20)
-        copper_rand = random.randint(50, 200)
-    elif x == 4:
-        gold_rand = 0
-        silver_rand = random.randint(5, 20)
-        copper_rand = 0
-    elif x == 5:
-        gold_rand = 0
-        silver_rand = random.randint(5, 20)
-        copper_rand = random.randint(50, 200)
-    elif x == 6:
-        gold_rand = 0
-        silver_rand = 0
-        copper_rand = random.randint(50, 200)
-    gold += gold_rand; silver += silver_rand; copper += copper_rand
-
-def roll_damage(num_dice, die_type):
-    global damage_bonus
-    total = 0; weapon = player["Equipped Weapon"]
-    for _ in range(num_dice):
-        total += random.randint(1, die_type); 
-    total += damage_bonus
-    print(f"You used a {weapon} and rolled a {num_dice}d{die_type} for {total}.")
-    return total
-    
-wolf_enemy = {
-    "name": "Hungry Wolf",
-    "hp": 14,
-    "ac": 10,
-    "Equipped Weapon": {"Wolf Claws"},
-    "Special": "Double Swipe",
-    "Stunned": 0
-}
-
-golem_enemy = {
-    "name": "Stone Golem",
-    "hp": 50,
-    "ac": 15,
-    "Equipped Weapon": {"Stone Fists"},
-    "Special": "Crush", 
-    "Stunned": 0
-}
-
-bandit_enemy = {
-    "name": "Bandit",
-    "hp": 12,
-    "ac": 14,
-    "Equipped Weapon": {"Shortsword"},
-    "Special": "Run", 
-    "Stunned": 0
-}
-
-goblin_enemy = {
-    "name": "Goblin",
-    "hp": 7,
-    "ac": 13,
-    "Equipped Weapon": {"Great Club"},
-    "Special": "None",
-    "Stunned": 0
-}
-
-enemies = [goblin_enemy, bandit_enemy, wolf_enemy]
-
-def attack(attacker, defender):
-    equipped_weapon = attacker.get("Equipped Weapon")
-    attack_bonus = 0
-    damage_die = (1, 4)
-    damage_bonus = 0
-    if equipped_weapon and equipped_weapon in weapons_data:
-        weapon_info = weapons_data[equipped_weapon]
-        attack_bonus = weapon_info.get("Attack Bonus", 0)
-        damage_die = weapon_info.get("Damage Die", (1, 4))
-        damage_bonus = weapon_info.get("Damage Bonus", 0)
-    roll = roll_20()
-    total_attack = roll + attack_bonus
-    num_dice, die_size = damage_die
-    damage = roll_damage(num_dice, die_size) + damage_bonus
-    attacker_name = attacker.get("name", "Attacker")
-    defender_name = defender.get("name", "Defender")
-    if auto_crit == 1:
-        damage *= 2
-        defender["hp"] -= damage
-        print(f"CRITICAL HIT! {attacker_name} deals {damage} damage to {defender_name}! (Roll: {roll})")        
-    if sneak == "t":
-        damage += roll_damage(3, 6)
-    if roll == 20:
-        damage *= 2
-        defender["hp"] -= damage
-        print(f"CRITICAL HIT! {attacker_name} deals {damage} damage to {defender_name}! (Roll: {roll})")
-    elif roll == 1:
-        print(f"{attacker_name} critically misses! (Roll: {roll})")
-    elif total_attack >= defender.get("ac", 10):
-        defender["hp"] -= damage
-        print(f"{attacker_name} hits {defender_name} for {damage} damage! (Roll: {roll})")
-    else:
-        print(f"{attacker_name} misses {defender_name}! (Roll: {roll})")
-    print(f"{defender_name} HP: {defender.get('hp', 0)}\n")
-
-def player_turn(player, enemy):
-    global hp, max_hp, auto_crit, sneak
-    while True:
-        if player["Stunned"] > 0:
-            print(f"{player['name']} is stunned and connot act this turn")
-            player["Stunned"] -= 1
-        else:
-            print("Choose an action:")
-            print("1. Attack (daggers will attack twice automaticaly)")
-            print("2. Switch Weapon")
-            print("3. Use Item")
-            action = input("> ")
-            if action == "1":
-                if player["Equipped Weapon"] == "Daggers": 
-                    attack(player, enemy); attack(player, enemy)
-                else:
-                    attack(player, enemy)
-                break
-            elif action == "2":
-                equip_weapon()
-            elif action == "3":
-                if not player["Inventory"]:
-                    print("No items in inventory!")
-                    continue
-                print(player["Inventory"])
-                item_choice = input("Which item do you want to use?\n> ").title()
-                if item_choice in player["Inventory"] and player["Inventory"][item_choice] > 0:
-                    if item_choice == "Healing Potion":
-                        heal = roll_damage(1, 6)
-                        player["hp"] += heal
-                        print(f"You heal {heal} hp, hp: {player['hp']}")
-                    elif item_choice == "Mini Fireball Scroll":
-                        fireball()
-                    elif item_choice == "Chromatic Orb Scroll":
-                        print("A orb of mixed light flies toward your enemy")
-                        enemy["hp"] -= roll_damage(2, 8)
-                    elif item_choice == "Lightning Bolt Scroll":
-                        print("A large lightning bolt streaks toward your enemy and stuns them for 1 turn")
-                        roll_damage(2, 6)
-                        enemy["Stunned"] = 1
-                    elif item_choice == "Smoke Bomb":
-                        print("You decide that this combat is far to difficult and decide to flee, using a smoke bomb in the process")
-                    elif item_choice == "Holy Symbol":
-                        if hp <= (max_hp / 2):
-                            print("Your patron blesses you with life")
-                            hp = max_hp; print(hp)
-                        elif enemy["hp"] <= 10:
-                            print("Your patron brings down divine justice and smotes your foe")
-                            enemy["hp"] = 0
-                        else:
-                            print("Your patron blesses you with strength, your next hit will auto crit")
-                            auto_crit = 1
-                    elif item_choice == "Medicinal Plants":
-                        heal_m = roll_damage(1, 4)
-                        player["hp"] += heal_m
-                        print(f"You consume 1 plant, and it heals you for {heal_m} health, {player['hp']}")
-                    
-# Boosted items
-
-                    elif item_choice == "Invisibility Potion":
-                        print("You chugg down the invisibility potion, and vanish, you will get 3d6 additional damage on your next attack, and can't be attacked during the next turn")
-                        sneak = "t"; enemy["Stunned"] = 1
-                    elif item_choice == "Shatter Scroll":
-                        print("You speak the incantation the scoll and SHATTER the golem, dealing 5d6 damage")
-                        x = roll_damage(5, 6); enemy["hp"] -= x
-                    elif item_choice == "Divine Orb":
-                        max_usage = 3
-                        current_usage = 0
-                        print("What divine power would you like summon (can be used 3 times)?")
-                        print("1. Health")
-                        print("2. Damage")
-                        print("3. Critical Strikes")
-                        while True:
-                            y = input("Choice\n> ")
-                            if not y in num_list_3:
-                                print("You're on the final boss, really")
-                                player_turn(player, enemy)
-                            else:
-                                if y == "1":
-                                    player["hp"] = max_hp
-                                elif y == "2":
-                                    z = (enemy["hp"] // 4); enemy["hp"] -= z
-
-
-                    player["Inventory"][item_choice] -= 1
-                    break
-                else:
-                    print("Invalid choice or no items left!")
-            else:
-                print("Invalid action!")
-
-#-------------#
-
-def enemy_turn(enemy, player):
-    global ran
-    if enemy["Stunned"] > 0:
-        print(f"{enemy['name']} is stunned and connot act this turn")
-        enemy["Stunned"] -= 1
-    # Bandit
-    elif enemy["hp"] < 3 and enemy.get("Special") == "Run":
-        print(f"{enemy['name']} uses {enemy['Special']}!")
-        ran = "t"
-    # Wolf
-    elif enemy["hp"] < 5 and enemy.get("Special") == "Double Swipe":
-        print("The hungry wolf is desperate for food and sipes twice!")
-        attack(enemy, player); attack(enemy, player)
-    # Stone Golem
-    elif enemy["hp"] < 7 and enemy.get("Special") == "Crush":
-        print("A giant fist slams down on you stunning you for one turn")
-        attack(enemy, player); player["Stunned"] = 1
-    else:
-        attack(enemy, player)
-
-def battle(player, enemy):
-    global ran
-    print(f"A wild {enemy['name']} appears!")
-    while player["hp"] > 0 and enemy["hp"] > 0:
-        player_turn(player, enemy)
-        if enemy["hp"] <= 0:
-            print(f"{enemy['name']} is defeated!")
-            if enemy == bandit_enemy:
-                print("As loot you recive and his shortsword")
-                print_decide_inventory("Shortsword", 1); money_loot(); print(player['Inventory'])
-            elif enemy == goblin_enemy:
-                print("As loot you recive and his great club")
-                print_decide_inventory("Shortsword", 1); money_loot(); print(player['Inventory'])
-            elif enemy == golem_enemy:
-                print("As loot you recive a pile of rocks and a gem worth 100 gold!")
-                print_decide_inventory("Valuable gem"); print_decide_inventory("a pile of rocks"); print(player['Inventory'])
-                print("====================================== Unlocked Ending: Golem, Victory ======================================")
-                print("Deafeating the golem is no easy feat, but with you and the town's power you slayed golem and claimed victory.")
-            break
-        
-        elif ran == "t":
-            print("The bandit has run after you lowering it, you won but got no rewards")
-            ran = "f"
-        enemy_turn(enemy, player)
-        if player["hp"] <= 0:
-            if enemy == golem_enemy:
-                print("=========================== Unlocked Ending: Golem, Defeat ===========================")
-                print("Succumbing to the powers of the golem were expected, you were still a weak adventurer.")
-                print("         Yet you still took on the challenge when most would have surrendered         ")
-            else:
-                print(f"You you died to {enemy["name"]}!")
-                print("Ending discovered: Failure")
-                exit()
