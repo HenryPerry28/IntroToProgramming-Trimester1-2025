@@ -58,5 +58,3 @@ for item in fav_fruit:
 
 y = fav_fruit.count("Strawberry")
 print(y)
-
-for _ in fav_fruit: print(a)
